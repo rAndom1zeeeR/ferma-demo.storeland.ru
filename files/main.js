@@ -566,8 +566,8 @@ function goodspage() {
   });
   // Сопутствующие товары Слайдер
   $('.related__goods .owl-carousel').owlCarousel({
-    items: 4,
-    margin: 0,
+    items: 5,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
@@ -592,13 +592,15 @@ function goodspage() {
       641:{items:2},
       768:{items:3},
       992:{items:3},
-      1200:{items:4}
+      1200:{items:4},
+      1440:{items:5},
+      1600:{items:5}
     }
   });
   // С этим товаром смотрят Слайдер
   $('.related__views .owl-carousel').owlCarousel({
-    items: 4,
-    margin: 0,
+    items: 5,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
@@ -623,7 +625,9 @@ function goodspage() {
       641:{items:2},
       768:{items:3},
       992:{items:3},
-      1200:{items:4}
+      1200:{items:4},
+      1440:{items:5},
+      1600:{items:5}
     }
   });
   // Функция показать больше для Отзывов
@@ -717,20 +721,6 @@ function catalogpage() {
     $(this)[0].form.submit();
   });
   
-  // Открытие каталога с сохранением вложенности
-  $('.catalog__item .open').click(function(event){
-  event.preventDefault();
-    if ($(this).closest('.parent').hasClass('opened')) {
-      $(this).parent().next('.sub').slideUp(600);
-      $(this).closest('.parent').removeClass('opened');
-      $(this).closest('.open').removeClass('opened');
-    } else {
-      $(this).parent().next('.sub').slideDown(600);
-      $(this).closest('.parent').addClass('opened');
-      $(this).closest('.open').addClass('opened');
-    }
-  });
-  
   // Открытие сортировки и показать по
   $('.selectBox .select .label').on('click',function(){
     if($(this).parent().parent().hasClass('clicked')){
@@ -781,38 +771,6 @@ function catalogpage() {
     } else {
       $(this).parent().parent().addClass('opened');
       $('#overlay').addClass('opened');
-    }
-  });
-  
-  // Вы смотрели
-  $('.recently__viewed .owl-carousel').owlCarousel({
-    items: 4,
-    margin: 20,
-    loop: false,
-    rewind: true,
-    lazyLoad: true,
-    nav: true,
-    navText: [ , ],
-    dots: false,
-    autoplay: false,
-    autoplayHoverPause: true,
-    autoHeight: true,
-    autoHeightClass: 'owl-height',
-    smartSpeed: 500,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    responsiveClass: true,
-    responsiveRefreshRate: 100,
-    responsive: {
-      0:{items:1},
-      320:{items:1, margin: 10},
-      481:{items:2, margin: 10},
-      641:{items:3, margin: 10},
-      768:{items:3, margin: 10},
-      992:{items:4},
-      1200:{items:4},
-      1400:{items:4}
     }
   });
 }
@@ -1208,15 +1166,15 @@ function Compare() {
   });
   function carouselInitialized(event){
     if (event.item.count > event.page.size) {
-      $('.navigation').css('display', 'flex');
+      $('.nav').css('display', 'flex');
     }else{
-      $('.navigation').css('display', 'none');
+      $('.nav').css('display', 'none');
     }
   }
-  $('.pageCompare .navigation .prev, .toLeft').click(function(event) {
+  $('.pageCompare .nav-prev, .toLeft').click(function(event) {
     $('.CompareGoodsTableTbody .owl-carousel').trigger('prev.owl.carousel');
   });
-  $('.pageCompare .navigation .next, .toRight').click(function(event) {
+  $('.pageCompare .nav-next, .toRight').click(function(event) {
     $('.CompareGoodsTableTbody .owl-carousel').trigger('next.owl.carousel');
   });
   // Сравнение товаров. Фильтр в верхней навигации. Отображение всех и различающихся характеристик товара
@@ -1274,7 +1232,7 @@ $('.productView__form, .goodsListForm').off('submit').submit(function() {
           // Сообщение с ошибкой
           if(typeof(Noty) == "function") {
             new Noty({
-              text: '<div class="noty__addto"><i class="icon-warning"></i><div class="noty__message">'+ $(data).html() + '</div></div>',
+              text: '<div class="noty__addto"><i class="icon-cancel"></i><div class="noty__message">'+ $(data).html() + '</div></div>',
               layout:"bottomCenter",
               type:"warning",
               theme:"",
@@ -1487,7 +1445,7 @@ $('.add-compare').off('click').click(function(){
           // Если есть функция, которая отображает сообщения пользователю
           if(typeof(Noty) == "function") {
             new Noty({
-              text: '<div class="noty__addto"><i class="icon-warning"></i><div class="noty__message">'+ data.message + '</div></div>',
+              text: '<div class="noty__addto"><i class="icon-cancel"></i><div class="noty__message">'+ data.message + '</div></div>',
               layout:"bottomCenter",
               type:"warning",
               theme:"",
@@ -1668,7 +1626,7 @@ $('.add-favorites').off('click').click(function(){
           // Если есть функция, которая отображает сообщения пользователю
           if(typeof(Noty) == "function") {
             new Noty({
-              text: '<div class="noty__addto"><i class="icon-warning"></i><div class="noty__message">'+ data.message + '</div></div>',
+              text: '<div class="noty__addto"><i class="icon-cancel"></i><div class="noty__message">'+ data.message + '</div></div>',
               layout:"bottomCenter",
               type:"warning",
               theme:"",
@@ -1703,7 +1661,7 @@ $('.add-favorites').off('click').click(function(){
 function removeFromFavorites(e){
   event.preventDefault();
   if(confirm('Вы точно хотите удалить товар из Избранного?')){
-    e.parent().parent().fadeOut().remove();
+    e.parent().parent().parent().fadeOut().remove();
     let href = e.attr('href');
     let oldCount = $('.favorites__count').attr('data-count');
     let goodsModId = e.attr('data-goods-mod-id');
@@ -1763,7 +1721,7 @@ function removeFromFavoritesAll(e){
 function removeFromCompare(e){
   event.preventDefault();
   if(confirm('Вы точно хотите удалить товар из сравнения?')){
-    e.parent().parent().fadeOut().remove();
+    e.parent().parent().parent().fadeOut().remove();
     let href = e.attr('href');
     let oldCount = $('.compare__count').attr('data-count');
     let goodsModId = e.attr('data-goods-mod-id');
@@ -2002,7 +1960,6 @@ $(function(){
   $('#fancybox__notify .form__callback').submit(validSubmitNotify);
 });
 
-
 // Валидаторы для Имени и телефона в "Служба поддержки" на главной
 function validNameFeedback(){
   let name = $('#fancybox__feedback').find('.form__person');
@@ -2042,6 +1999,50 @@ function validSubmitFeedback(){
 // Проверка отправки формы
 $(function(){
   $('#fancybox__feedback .form__callback').submit(validSubmitFeedback);
+});
+
+// Валидаторы для телефона в "Уведомить" в карточке товара
+function validPhoneSubscribe(){
+  let tel = $('#subscribe').find('.form__phone');
+  let check = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{5,10}$/.test(tel.val());
+  if(check == true && check != ''){
+    tel.removeClass('error');
+    tel.parent().removeClass('error');
+    tel.attr('placeholder','Введите номер');
+    return true;
+  }
+  else{
+    tel.addClass('error');
+    tel.parent().addClass('error');
+    tel.attr('placeholder','Вы не ввели номер');
+    return false;
+  }
+}
+// Подписаться. Валидатор почты в "Подписаться"
+function validEmailSubscribe(){
+  let email = $('#subscribe').find('.form__email');
+  let check = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.val());
+  if(check == true && check != ''){
+    email.removeClass('error');
+    email.parent().removeClass('error');
+    email.attr('placeholder','Введите Email');
+    return true;
+  }else{
+    email.addClass('error');
+    email.parent().addClass('error');
+    email.val('');
+    email.attr('placeholder','Вы ввели неверный Email');
+    return false;
+  }
+}
+function validSubmitSubscribe(){
+  let email = validEmailSubscribe();
+  let phone = validPhoneSubscribe();
+  return email || phone;
+}
+// Проверка отправки формы
+$(function(){
+  $('#subscribe .form__callback').submit(validSubmitSubscribe);
 });
 
 // Функция Быстрого просмотра товара
@@ -2332,7 +2333,7 @@ function OrderScripts() {
     }
   });
   // Отображение вариантов оплаты
-  let ID = $('input[name="form[delivery][id]"]:checked').val();
+  var ID = $('input[name="form[delivery][id]"]:checked').val();
   $('.order__payment').hide();
   $('.order__payment[rel="' + ID + '"]').show();
   $('.order__payment[rel="' + ID + '"]').find('input:first').click();
@@ -2366,7 +2367,7 @@ function OrderScripts() {
       $('.cartSumDelivery .num').text(price);
     }
     // Обновление цены с учетом доставки
-    let cartSumTotalHide = $('.cartSumTotalHide:eq(0) .num').text().toString().replace(/\s/g, '');
+    let cartSumTotalHide = $('.cartSumDiscount:eq(0) .num').text().toString().replace(/\s/g, '');
     let newSum = parseInt(cartSumTotalHide) + parseInt(priceBlock.text());
     $('.cartSumTotal .num').text(newSum);
     // Скрытие необязательных полей при выборе самовывоза
@@ -2415,33 +2416,40 @@ function OrderScripts() {
 function OrderScriptsSelect() {
   // Выбор доставки
   $('.delivery__select select').change(function(){
-    selectedDelId = $(this).find('option:selected').attr('delid');
+    let selectedDelId = $(this).find('option:selected').attr('delid');
     $('.delivery__zoneSelect').hide();
     $('.delivery__zoneSelect[del="'+selectedDelId+'"]').show();
     $('.delivery__zoneSelect option').attr('selected',false)
     $('.delivery__zoneSelect[del="'+selectedDelId+'"] option:first-of-type').attr('selected',true);
     $('.delivery__option .delivery__radio[value="'+selectedDelId+'"]').click();
-    WithoutZone = $('div[rel='+ selectedDelId +'] .delivery__radio:checked').attr('pricewithoutzones');
-    WithZone = $('div[rel='+ selectedDelId +'] .zone__radio:checked').attr('price');
+    let WithoutZone = $('div[rel='+ selectedDelId +'] .delivery__radio:checked').attr('pricewithoutzones');
+    let WithZone = $('div[rel='+ selectedDelId +'] .zone__radio:checked').attr('price');
     if(WithZone >= 0){
       startprice = WithZone;
     }else{
       startprice = WithoutZone;
     }
     $('.changeprice').text(startprice);
+    $('.cartSumDelivery .num').text(startprice);
     $('.order__payment').hide();
     $('.order__payment[rel="'+ selectedDelId +'"]').show();
-    startInputId = $('.delivery__radio:checked').attr('value');
+    let startInputId = $('.delivery__radio:checked').attr('value');
     $('.hiddenRadio .order__payment input').attr('checked',false);
     $('.hiddenRadio .order__payment[rel="'+startInputId+'"] input').each(function(){
       $(this).click();
       return false;
     });
-    DeliveryDescription = $('.delivery__radio:checked').next('.delivery__desc').html();
-    $('.delivery__description').html(DeliveryDescription);
     $('.order__paymentSelect option:first-child').prop('selected', true);
+    // Вывод описания доставки
+    let DeliveryDescription = $('.delivery__radio:checked').parent().find('.delivery__desc').html()
+    $('.delivery__description').html(DeliveryDescription);
+    if (DeliveryDescription == undefined ) {
+      $('.delivery__description').css("display", "none");
+    }else{
+      $('.delivery__description').css("display", "block");
+    }
     // Вывод описания оплаты
-    PaymentDescription = $('.hiddenRadio .paymentRadio:checked').next('.payment__desc').html();
+    let PaymentDescription = $('.hiddenRadio .paymentRadio:checked').parent().find('.delivery__desc').html()
     $('.payment__description').html(PaymentDescription);
     if (PaymentDescription == undefined ) {
       $('.payment__description').css("display", "none");
@@ -2452,33 +2460,40 @@ function OrderScriptsSelect() {
   
   // Обновление цены и описания при выборе доставки
   $('.delivery__select select').each(function(){
-    selectedDelId = $(this).find('option:selected').attr('delid');
+    let selectedDelId = $(this).find('option:selected').attr('delid');
     $('.delivery__zoneSelect').hide();
     $('.delivery__zoneSelect[del="'+selectedDelId+'"]').show();
     $('.delivery__zoneSelect option').attr('selected',false)
     $('.delivery__zoneSelect[del="'+selectedDelId+'"] option:first-of-type').attr('selected',true);
     $('.delivery__option .delivery__radio[value="'+selectedDelId+'"]').click();
-    WithoutZone = $('div[rel='+ selectedDelId +'] .delivery__radio:checked').attr('pricewithoutzones');
-    WithZone = $('div[rel='+ selectedDelId +'] .zone__radio:checked').attr('price');
+    let WithoutZone = $('div[rel='+ selectedDelId +'] .delivery__radio:checked').attr('pricewithoutzones');
+    let WithZone = $('div[rel='+ selectedDelId +'] .zone__radio:checked').attr('price');
     if(WithZone >= 0){
       startprice = WithZone;
     }else{
       startprice = WithoutZone;
     }
     $('.changeprice').text(startprice);
+    $('.cartSumDelivery .num').text(startprice);
     $('.order__payment').hide();
     $('.order__payment[rel="'+ selectedDelId +'"]').show();
-    startInputId = $('.delivery__radio:checked').attr('value');
+    let startInputId = $('.delivery__radio:checked').attr('value');
     $('.hiddenRadio .order__payment input').attr('checked',false);
     $('.hiddenRadio .order__payment[rel="'+startInputId+'"] input').each(function(){
       $(this).click();
       return false;
     });
-    DeliveryDescription = $('.delivery__radio:checked').next('.delivery__desc').html();
-    $('.delivery__description').html(DeliveryDescription);
     $('.order__paymentSelect option:first-child').prop('selected', true);
+    // Вывод описания доставки
+    let DeliveryDescription = $('.delivery__radio:checked').next('.delivery__desc').html();
+    $('.delivery__description').html(DeliveryDescription);
+    if (DeliveryDescription == undefined ) {
+      $('.delivery__description').css("display", "none");
+    }else{
+      $('.delivery__description').css("display", "block");
+    }
     // Вывод описания оплаты
-    PaymentDescription = $('.hiddenRadio .paymentRadio:checked').next('.payment__desc').html();
+    let PaymentDescription = $('.hiddenRadio .paymentRadio:checked').next('.payment__desc').html();
     $('.payment__description').html(PaymentDescription);
     if (PaymentDescription == undefined ) {
       $('.payment__description').css("display", "none");
@@ -2489,25 +2504,27 @@ function OrderScriptsSelect() {
   
   // Выбор зоны доставки
   $('.delivery__zoneSelect select').each(function(){
-    optValue = $(this).find('option:selected').attr('value');
+    let optValue = $(this).find('option:selected').attr('value');
     $('.delivery__zones input[value="'+optValue+'"]').click();
-    WithZone = $('.zone__radio:checked').attr('price');
+    let WithZone = $('.zone__radio:checked').attr('price');
     $('.changeprice').text(WithZone);
+    $('.cartSumDelivery .num').text(startprice);
   });
   
   // Выбор зоны доставки
   $('.delivery__zoneSelect select').change(function(){
-    optValue = $(this).find('option:selected').attr('value');
+    let optValue = $(this).find('option:selected').attr('value');
     $('.delivery__zones input[value="'+optValue+'"]').click();
-    WithZone = $('.zone__radio:checked').attr('price');
+    let WithZone = $('.zone__radio:checked').attr('price');
     $('.changeprice').text(WithZone);
+    $('.cartSumDelivery .num').text(startprice);
   });
   
   // Выбор оплаты
   $('.paymentSelect').change(function(){
-    selectedDelId = $(this).find('option:selected').attr('value');
+    let selectedDelId = $(this).find('option:selected').attr('value');
     $('.hiddenRadio .paymentRadio[value="'+selectedDelId+'"]').click();
-    PaymentDescription = $('.hiddenRadio .paymentRadio:checked').next('.payment__desc').html();
+    let PaymentDescription = $('.hiddenRadio .paymentRadio:checked').next('.payment__desc').html();
     $('.payment__description').html(PaymentDescription);
     if (PaymentDescription == undefined ) {
       $('.payment__description').css("display", "none");
@@ -2584,6 +2601,8 @@ function cartDelete(s){
 function startOrder(){  
   let globalOrder = $('#globalOrder');
   let cartTable = $('.cartTable');
+  let closeOrder = $('#closeOrder');
+  let startOrder = $('#startOrder');
   //объект блока куда будет выводиться форма быстрого заказа
   let OrderAjaxBlock = $('#OrderAjaxBlock');
   let urlQuickForm = '/cart/add'; // адрес страницы с формой
@@ -2592,8 +2611,10 @@ function startOrder(){
     {name: 'ajax_q', value: 1},
     {name: 'fast_order', value: 1}
   ];
-  cartTable.hide();
+  cartTable.addClass('disable');
   globalOrder.show('slow');
+  closeOrder.show();
+  startOrder.hide();
   $.ajax({
     type: "POST",
     cache: false,
@@ -2610,8 +2631,10 @@ function startOrder(){
       $(".form__phone").mask("+7 (999) 999-9999");
       $("#sites_client_phone").mask("+7 (999) 999-9999");
       $('#closeOrder').on('click', function() {
-        cartTable.show('slow');
+        cartTable.removeClass('disable');
         globalOrder.hide();
+        closeOrder.hide();
+        startOrder.show();
         $('html, body').delay(400).animate({scrollTop : jQuery('#main').offset().top}, 800);
         return false;
       });
@@ -2650,12 +2673,12 @@ function startOrder(){
 
 // Отправка купона при оформлении заказа
 function coupons() {
-  let submitBtn = $('.coupon__button');
-  let cuponInput = $('#coupon__code');
-  let resetBtn = $('.coupon__reset');
+  var submitBtn = $('.coupon__button');
+  var couponInput = $('#coupon__code');
+  var resetBtn = $('.coupon__reset');
   submitBtn.on('click', function(){
     let url = '/order/stage/confirm';
-    let val = cuponInput.val();
+    let val = couponInput.val();
     // Получаем данные формы, которые будем отправлять на сервер
     let formData = $('#myform').serializeArray();
     formData.push({name: 'ajax_q', value: 1});
@@ -2679,25 +2702,26 @@ function coupons() {
         $('.total__coupons').show();
         // Получаем новую итоговую стоимость заказа
         let totalSum = totalBlock.find('.total-sum').data('total-sum');
-        let deliveryPrice = parseInt($('.delivery__price.changeprice').text());
+        let deliveryPrice = parseInt($('.cartSumDelivery .num').text());
         let newTotalSum = totalSum + deliveryPrice;
         let cartSum = $('.cartSumTotal').data('value');
-        // Обновляем значение итоговой стоимости
-        $('.cartSumTotal .num').text(newTotalSum);
-        $('.cartSumTotal').attr('data-value', newTotalSum);
-        $('.cartSumCoupons').attr('data-value', newTotalSum);
-        $('.cartSumTotalHide').attr('data-value', newTotalSum);
-        $('.cartSumTotalHide .num').text(newTotalSum);
-        if (newTotalSum >= cartSum) {
-          cuponInput.parent().addClass('error');
-          cuponInput.parent().removeClass('active');
-          cuponInput.val("").attr("placeholder", "Купон неверен");
+        if (totalSum > cartSum) {
+          couponInput.parent().addClass('error');
+          couponInput.parent().removeClass('active');
+          couponInput.val("").attr("placeholder", "Купон неверен");
           $('.total__coupons').hide();
           $('.total__discount').show();
         } else {
-          cuponInput.parent().removeClass('error');
-          cuponInput.parent().addClass('active');
+          couponInput.parent().removeClass('error');
+          couponInput.parent().addClass('active');
           $('.total__coupons').show();
+          // Обновляем значение итоговой стоимости
+          $('.cartSumTotal .num').text(newTotalSum);
+          $('.cartSumTotal').attr('data-value', newTotalSum);
+          $('.cartSumCoupons').attr('data-value', newTotalSum);
+          $('.cartSumTotalHide').attr('data-value', newTotalSum);
+          $('.cartSumTotalHide .num').text(newTotalSum);
+          $('.cartSumDiscount .num').text(totalSum);
         }
       },
       error: function(data){
@@ -2711,13 +2735,19 @@ function coupons() {
     setTimeout(function(){
       $('.total__coupons').hide();
       $('.total__discount').show();
-      cuponInput.parent().removeClass('error');
-      cuponInput.parent().removeClass('active');
-      cuponInput.val("").attr("placeholder", "Введите купон");
+      let cartSum = $('.cartSumDiscount .num').data('value');
+      $('.cartSumTotal .num').text(cartSum);
+      $('.cartSumTotal').attr('data-value', cartSum);
+      $('.cartSumCoupons').attr('data-value', cartSum);
+      $('.cartSumTotalHide').attr('data-value', cartSum);
+      $('.cartSumTotalHide .num').text(cartSum);
+      couponInput.parent().removeClass('error');
+      couponInput.parent().removeClass('active');
+      couponInput.val("").attr("placeholder", "Введите купон");
     }, 500);
   });
   // Отображение кнопки Сброс
-  cuponInput.on('input',function(){
+  couponInput.on('input',function(){
     if($(this).val()) {
       $(this).parent().find('.coupon__reset').addClass('active')
     } else {
@@ -2726,11 +2756,10 @@ function coupons() {
   });
 }
 
-
 // Функция показать больше для Каталога на главной странице
 function pdtCatalog() {
   $('#catalog .owl-carousel').owlCarousel({
-    items: 8,
+    items: 2,
     margin: 32,
     loop: false,
     rewind: true,
@@ -2751,14 +2780,9 @@ function pdtCatalog() {
     responsiveRefreshRate: 100,
     responsive: {
       0:{items:1},
-      320:{items:2, margin: 16},
-      481:{items:3, margin: 16},
-      641:{items:3, margin: 16},
-      768:{items:4, margin: 16},
-      992:{items:5, margin: 16},
-      1200:{items:6},
-      1440:{items:7},
-      1680:{items:8}
+      320:{items:1},
+      481:{items:1},
+      991:{items:2, margin: 16}
     }
   });
 }
@@ -2798,18 +2822,81 @@ function pdtBrands() {
   });
 }
 
+$.fn.extend({
+  toggleText: function (a, b) {
+    var toggle = false, that = this;
+    this.on('click', function () {
+      that.text((toggle = !toggle) ? b : a);
+    });
+    return this;
+  }
+});
 
 // Функция слайдеров на главной
 function pdtSlider() {
   // Функция слайдер для "Акции" на главной странице
   $('#pdt__sales .owl-carousel').owlCarousel({
-    items: 5,
-    margin: 32,
+    items: 1,
+    margin: 0,
     loop: false,
     rewind: true,
     lazyLoad: true,
     nav: true,
-    navContainer: '#pdt__sales .owl-nav',
+    navContainer: '',
+    navText: [ , ],
+    dots: false,
+    autoHeight: false,
+    autoHeightClass: 'owl-height',
+    autoplay: false,
+    autoplayHoverPause: true,
+    smartSpeed: 500,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    responsiveClass: true,
+    responsiveRefreshRate: 100,
+    responsive: {
+      0:{items:1},
+      320:{items:1},
+      481:{items:1},
+      641:{items:1},
+      768:{items:1},
+      992:{items:1},
+      1200:{items:1},
+      1440:{items:1}
+    }
+  });
+  // Функция слайдера для "Лидеры продаж" на главной странице
+  $('#pdt__best .owl-carousel').owlCarousel({
+    items: 1,
+    margin: 0,
+    loop: false,
+    rewind: true,
+    lazyLoad: true,
+    nav: true,
+    navContainer: '#pdt__best .owl-nav',
+    navText: [ , ],
+    dots: false,
+    autoHeight: false,
+    autoHeightClass: 'owl-height',
+    autoplay: false,
+    autoplayHoverPause: true,
+    smartSpeed: 500,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    responsiveClass: true,
+    responsiveRefreshRate: 100
+  });
+  // Функция слайдера для Новинок на главной странице
+  $('#pdt__new .owl-carousel').owlCarousel({
+    items: 5,
+    margin: 16,
+    loop: false,
+    rewind: true,
+    lazyLoad: true,
+    nav: false,
+    navContainer: '',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -2831,17 +2918,19 @@ function pdtSlider() {
       992:{items:3},
       1200:{items:4},
       1440:{items:5}
-    }
+    },
+    onInitialized: carouselInitialized,
+    onChanged: carouselInitialized
   });
-  // Функция слайдера для "Товары на главной" на главной странице
+  // Функция слайдера для Хитов продаж на главной странице
   $('#pdt__sale .owl-carousel').owlCarousel({
-    items: 8,
-    margin: 32,
+    items: 5,
+    margin: 16,
     loop: false,
     rewind: true,
     lazyLoad: true,
-    nav: true,
-    navContainer: '#pdt__sale .owl-nav',
+    nav: false,
+    navContainer: '',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -2856,82 +2945,92 @@ function pdtSlider() {
     responsiveRefreshRate: 100,
     responsive: {
       0:{items:1},
-      320:{items:2, margin: 16},
-      481:{items:3, margin: 16},
-      641:{items:3, margin: 16},
-      768:{items:4, margin: 16},
-      992:{items:5, margin: 16},
-      1200:{items:6},
-      1440:{items:7},
-      1680:{items:8}
-    }
+      320:{items:1},
+      481:{items:2},
+      641:{items:3},
+      768:{items:3},
+      992:{items:3},
+      1200:{items:4},
+      1440:{items:5}
+    },
+    onInitialized: carouselInitialized,
+    onChanged: carouselInitialized
   });
-  // Функция слайдера для "Новинок" на главной странице
-  $('#pdt__new .owl-carousel').owlCarousel({
-    items: 8,
-    margin: 32,
-    loop: false,
-    rewind: true,
-    lazyLoad: true,
-    nav: true,
-    navContainer: '#pdt__new .owl-nav',
-    navText: [ , ],
-    dots: false,
-    autoHeight: false,
-    autoHeightClass: 'owl-height',
-    autoplay: false,
-    autoplayHoverPause: true,
-    smartSpeed: 500,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    responsiveClass: true,
-    responsiveRefreshRate: 100,
-    responsive: {
-      0:{items:1},
-      320:{items:2, margin: 16},
-      481:{items:3, margin: 16},
-      641:{items:3, margin: 16},
-      768:{items:4, margin: 16},
-      992:{items:5, margin: 16},
-      1200:{items:6},
-      1440:{items:7},
-      1680:{items:8}
+  // Кнопки навигации
+  function carouselInitialized(event){
+    if (event.item.count > event.page.size) {
+      $('#pdt .block__nav .owl-nav').css('display', 'block');
+    }else{
+      $('#pdt .block__nav .owl-nav').css('display', 'none');
     }
+  }
+  $('#pdt .block__nav .owl-prev').click(function(event) {
+    $('#pdt .owl-carousel').trigger('prev.owl.carousel');
   });
-  // Функция слайдера для "Хитов продаж" на главной странице
-  $('#pdt__best .owl-carousel').owlCarousel({
-    items: 8,
-    margin: 32,
-    loop: false,
-    rewind: true,
-    lazyLoad: true,
-    nav: true,
-    navContainer: '#pdt__best .owl-nav',
-    navText: [ , ],
-    dots: false,
-    autoHeight: false,
-    autoHeightClass: 'owl-height',
-    autoplay: false,
-    autoplayHoverPause: true,
-    smartSpeed: 500,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    responsiveClass: true,
-    responsiveRefreshRate: 100,
-    responsive: {
-      0:{items:1},
-      320:{items:2, margin: 16},
-      481:{items:3, margin: 16},
-      641:{items:3, margin: 16},
-      768:{items:4, margin: 16},
-      992:{items:5, margin: 16},
-      1200:{items:6},
-      1440:{items:7},
-      1680:{items:8}
-    }
+  $('#pdt .block__nav .owl-next').click(function(event) {
+    $('#pdt .owl-carousel').trigger('next.owl.carousel');
   });
+  // Табы в товарах
+  $('#pdt .nav__tab').on('click', function (event) {
+    event.preventDefault();
+    let content = $(this).attr('data-content');
+    $('#pdt [id^="pdt__"]').prepend('<div class="preloader"><div class="loading"></div></div>');
+    preload();
+    $('#pdt .nav__tab').removeClass('active')
+    $('#pdt [id^="pdt__"][data-content]').removeClass('active');
+    $(this).addClass('active');
+    $('#pdt [id^="pdt__"][data-content="'+ content +'"').addClass('active');
+  });
+
+  // Кол-во отображаемых товаров
+  if(getClientWidth() > 991){
+    var GOODS_INDEX = 6;
+  }else{
+    var GOODS_INDEX = 3;
+  }
+  // Весь каталог на главной
+  if(catalog_full){
+    var promises = $.map(catalog_full, function(el){
+      return $.ajax(el.href + '?only_body=1&goods_view_type=0')
+        .then(function(d){
+          let container = $('.products__container.' + el.id);
+          let $parentGridContainer = container.find('.products__list');
+          let $data = $(d);
+          let $newProducts = $data.find('.products__list').find('.product__item').parent();
+          let itemsLength = $data.find('.products__list .product__item').length;
+          let buttons = $('.products__container.' + el.id).find('.nav__buttons');
+          $newProducts = $newProducts.html();
+          // Вывод товаров
+          if(!$parentGridContainer.find('.products__list').length){
+            $parentGridContainer.append($newProducts);
+          }
+          // Добавляем кнопку "Показать все"
+          if(itemsLength > GOODS_INDEX){
+            buttons.append($('<button class="button button3"></button>'))
+            buttons.show();
+          }else{
+            buttons.hide();
+          }
+          // Показать все, скрыть
+          buttons.find('button').on('click', function (event){
+            event.preventDefault();
+            container.toggleClass('active')
+            $(this).toggleClass('active')
+          });
+          // Загрузка скриптов
+          lozad().observe();
+          Addto();
+          AddCart();
+          quantity();
+        });
+    });
+    $.when.apply(this, promises)
+      .then(function(){
+        // catalog_full = null;
+        // $('.products-container').show();
+      })
+  }
+
 }
 
 // Слайдер для главной страницы
@@ -2951,7 +3050,7 @@ function slideShow() {
     URLhashListener: true,
     autoplay: false,
     autoplayHoverPause: true,
-    autoHeight: false,
+    autoHeight: true,
     autoHeightClass: 'owl-height',
     smartSpeed: 500,
     dotsSpeed: 400,
@@ -2964,51 +3063,178 @@ function slideShow() {
 }
 // Новости
 function newsCarousel() {
-  $("#news .owl-carousel").owlCarousel({
-    items: 8,
-    margin: 32,
-    loop: false,
-    rewind: true,
-    lazyLoad: true,
-    nav: false,
-    navContainer: '#news .owl-nav',
-    navText: [ , ],
-    dots: false,
-    autoHeight: false,
-    autoHeightClass: 'owl-height',
-    autoplay: false,
-    autoplayHoverPause: true,
-    smartSpeed: 500,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    responsiveClass: true,
-    responsiveRefreshRate: 100,
-    responsive: {
-      0:{items:1},
-      320:{items:2, margin: 16},
-      481:{items:3, margin: 16},
-      641:{items:3, margin: 16},
-      768:{items:4, margin: 16},
-      992:{items:5, margin: 16},
-      1200:{items:6},
-      1440:{items:7},
-      1680:{items:8}
+  if ($("#news .news_list_all.owl-carousel").length){
+    $("#news .news_list_all.owl-carousel").owlCarousel({
+      items: 4,
+      margin: 20,
+      loop: false,
+      rewind: true,
+      lazyLoad: true,
+      nav: false,
+      navContainer: '',
+      navText: [ , ],
+      dots: false,
+      autoHeight: false,
+      autoHeightClass: 'owl-height',
+      autoplay: false,
+      autoplayHoverPause: true,
+      smartSpeed: 500,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      responsiveClass: true,
+      responsiveRefreshRate: 100,
+      responsive: {
+        0:{items:1},
+        320:{items:1},
+        481:{items:2},
+        641:{items:3},
+        768:{items:3},
+        992:{items:4},
+        1200:{items:4}
+      },
+      onInitialized: carouselInitialized,
+      onChanged: carouselInitialized
+    });
+  }else{
+    $("#news .news_list_articles.owl-carousel").owlCarousel({
+      items: 4,
+      margin: 20,
+      loop: false,
+      rewind: true,
+      lazyLoad: true,
+      nav: false,
+      navContainer: '',
+      navText: [ , ],
+      dots: false,
+      autoHeight: false,
+      autoHeightClass: 'owl-height',
+      autoplay: false,
+      autoplayHoverPause: true,
+      smartSpeed: 500,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      responsiveClass: true,
+      responsiveRefreshRate: 100,
+      responsive: {
+        0:{items:1},
+        320:{items:1},
+        481:{items:2},
+        641:{items:3},
+        768:{items:3},
+        992:{items:4},
+        1200:{items:4}
+      },
+      onInitialize: carouselInitialized,
+      onInitialized: carouselInitialized,
+      onChanged: carouselInitialized
+    });
+    $("#news .news_list_mass_media.owl-carousel").owlCarousel({
+      items: 4,
+      margin: 20,
+      loop: false,
+      rewind: true,
+      lazyLoad: true,
+      nav: false,
+      navContainer: '',
+      navText: [ , ],
+      dots: false,
+      autoHeight: false,
+      autoHeightClass: 'owl-height',
+      autoplay: false,
+      autoplayHoverPause: true,
+      smartSpeed: 500,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      responsiveClass: true,
+      responsiveRefreshRate: 100,
+      responsive: {
+        0:{items:1},
+        320:{items:1},
+        481:{items:2},
+        641:{items:3},
+        768:{items:3},
+        992:{items:4},
+        1200:{items:4}
+      },
+      onInitialize: carouselInitialized,
+      onInitialized: carouselInitialized,
+      onChanged: carouselInitialized
+    });
+    $("#news .news_list_shop.owl-carousel").owlCarousel({
+      items: 4,
+      margin: 32,
+      loop: false,
+      rewind: true,
+      lazyLoad: true,
+      nav: false,
+      navContainer: '',
+      navText: [ , ],
+      dots: false,
+      autoHeight: false,
+      autoHeightClass: 'owl-height',
+      autoplay: false,
+      autoplayHoverPause: true,
+      smartSpeed: 500,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      responsiveClass: true,
+      responsiveRefreshRate: 100,
+      responsive: {
+        0:{items:1},
+        320:{items:1},
+        481:{items:2},
+        641:{items:3},
+        768:{items:3},
+        992:{items:3},
+        1200:{items:3},
+        1680:{items:4}
+      },
+      onInitialize: carouselInitialized,
+      onInitialized: carouselInitialized,
+      onChanged: carouselInitialized
+    });
+  }
+  // Кнопки навигации
+  function carouselInitialized(event){
+    if (event.item.count > event.page.size) {
+      $('#news .block__nav .owl-nav').css('display', 'block');
+    }else{
+      $('#news .block__nav .owl-nav').css('display', 'none');
     }
+  }
+  $('#news .block__nav .owl-prev').click(function(event) {
+    $('#news .owl-carousel').trigger('prev.owl.carousel');
+  });
+  $('#news .block__nav .owl-next').click(function(event) {
+    $('#news .owl-carousel').trigger('next.owl.carousel');
+  });
+  // Табы в новостях
+  $('#news .nav__tab').on('click', function (event) {
+    event.preventDefault();
+    let content = $(this).attr('data-content');
+    $('#news [class^="news_list_"]').prepend('<div class="preloader small"><div class="loading"></div></div>');
+    preload();
+    $('#news .nav__tab').removeClass('active')
+    $('#news [class^="news_list_"]').removeClass('active');
+    $(this).addClass('active');
+    $('#news [class^="news_list_"][data-content="'+ content +'"').addClass('active');
   });
 }
 
 // Функции для главной страницы
 function recViewed() {
-  // Функция слайдера для Хитов продаж на главной странице
-  $('#viewed .owl-carousel').owlCarousel({
-    items: 4,
+  $('.viewed .owl-carousel').owlCarousel({
+    items: 1,
     margin: 0,
     loop: false,
     rewind: true,
     lazyLoad: true,
     nav: true,
-    navContainer: '#viewed .owl-nav',
+    navContainer: '.viewed .owl-nav',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -3020,18 +3246,11 @@ function recViewed() {
     touchDrag: true,
     pullDrag: true,
     responsiveClass: true,
-    responsiveRefreshRate: 100,
-    responsive: {
-      0:{items:1},
-      320:{items:1},
-      481:{items:2},
-      641:{items:2},
-      768:{items:3},
-      992:{items:3},
-      1200:{items:4}
-    }
+    responsiveRefreshRate: 100
   });
 }
+
+
 
 
 // Открытие Контактов, Меню, Сравнения, Избранного
@@ -3088,8 +3307,71 @@ function OpenMenu() {
       $('#overlay').addClass('opened');
     }
   });
+
+  // Открытие каталога с сохранением вложенности
+  $('.catalog__item .open').click(function(event){
+    event.preventDefault();
+    if ($(this).closest('.parent').hasClass('opened')) {
+      $(this).parent().next('.sub').slideUp(600);
+      $(this).closest('.parent').removeClass('opened');
+      $(this).closest('.open').removeClass('opened');
+    } else {
+      $(this).parent().next('.sub').slideDown(600);
+      $(this).closest('.parent').addClass('opened');
+      $(this).closest('.open').addClass('opened');
+    }
+  });
+
+  $('.subscribe').on('click', function(event){
+    event.preventDefault();
+    $('#subscribe .form__button').click();
+  });
 }
 
+// Дополнительные пункты меню в шапке Перенос пунктов меню
+function mainnavHeader(){
+  let mainnav = $('.header__menu .mainnav');
+  let overMenuExist = mainnav.find('.overflowMenu li').length;
+  if(overMenuExist){
+    mainnav.find('.overflowMenu li').removeClass('mainnav__replaced');
+    mainnav.find('.mainnav__more').remove();
+    mainnav.find('.overflowMenu li').each(function(){
+      mainnav.find('.mainnav__list').append($(this));
+    });
+  }
+  let menuWidth = mainnav.width();
+  let menuCount = mainnav.find('.mainnav__list li').length + 1;
+  let nextCheck = 0;
+  for(let i=1; i < menuCount;  i++){
+    let currentWidth = parseInt(Math.ceil(mainnav.find('.mainnav__list li:nth-child('+i+')').width())) + 16;
+    nextCheck += currentWidth;
+    if(nextCheck > menuWidth){
+      let a = i;
+      for(a;a < menuCount;a++){
+        mainnav.find('.mainnav__list li:nth-child('+ a +')').addClass('mainnav__replaced');
+      }
+      mainnav.find('.mainnav__replaced').each(function(){
+        mainnav.find('.overflowMenu').append($(this));
+      });
+      mainnav.find('.mainnav__list').append('<li class="mainnav__item mainnav__more"><a class="mainnav__link">Еще...</a></li>');
+      mainnav.find('.mainnav__more').on('click',function(){
+        mainnav.find('.overflowMenu').hasClass('opened') ? mainnav.find('.overflowMenu').removeClass('opened') : mainnav.find('.overflowMenu').addClass('opened');
+        mainnav.hasClass('opened') ? mainnav.removeClass('opened') : mainnav.addClass('opened');
+      });
+      $(function($){
+        $(document).mouseup(function (e){
+          let div =  mainnav.find('.overflowMenu.opened');
+          let btn =  mainnav.find('.mainnav__more');
+          if (!div.is(e.target) && div.has(e.target).length === 0 && !btn.is(e.target)) {
+            div.removeClass('opened');
+            mainnav.removeClass('opened');
+          }
+        });
+      });
+      return false;
+    }
+  }
+}
 
 // Много и Мало вместо точного количества
 function goodsModRest() {
@@ -3156,6 +3438,35 @@ function priceDiff() {
   });
 }
 
+// Переименование названий Месяца
+function monthNames() {
+  $('#news .month').each(function (){
+    if ($(this).text() === 'Jan') {
+      $(this).text('Января')
+    }else if ($(this).text() === 'Feb') {
+      $(this).text('Февраля')
+    }else if ($(this).text() === 'Mar') {
+      $(this).text('Марта')
+    }else if ($(this).text() === 'Apr') {
+      $(this).text('Апреля')
+    }else if ($(this).text() === 'May') {
+      $(this).text('Мая')
+    }else if ($(this).text() === 'Jun') {
+      $(this).text('Июня')
+    }else if ($(this).text() === 'Jul') {
+      $(this).text('Июля')
+    }else if ($(this).text() === 'Aug') {
+      $(this).text('Августа')
+    }else if ($(this).text() === 'Sep') {
+      $(this).text('Сентября')
+    }else if ($(this).text() === 'Nov') {
+      $(this).text('Ноября')
+    }else if ($(this).text() === 'Dec') {
+      $(this).text('Декабря')
+    }
+  });
+}
+
 // Загрузка основных функций шаблона
 $(document).ready(function(){
   OpenMenu();
@@ -3166,6 +3477,9 @@ $(document).ready(function(){
   goodsModRest();
   quantity();
   priceDiff();
+  monthNames();
+  mainnavHeader();
+  recViewed();
   // Ленивая загрузка
   $(function(){
     const observer = lozad(); // lazy loads elements with default selector as '.lozad'
