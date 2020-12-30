@@ -90,17 +90,6 @@
 
 @font-face {
 	font-family: 'Gotham Pro';
-	src: url('GothamPro-Light.eot');
-	src: local('Gotham Pro Light'), local('GothamPro-Light'),
-		url('GothamPro-Light.eot?#iefix') format('embedded-opentype'),
-		url('GothamPro-Light.woff') format('woff'),
-		url('GothamPro-Light.ttf') format('truetype');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Gotham Pro';
 	src: url('GothamPro-Black.eot');
 	src: local('Gotham Pro Black'), local('GothamPro-Black'),
 		url('GothamPro-Black.eot?#iefix') format('embedded-opentype'),

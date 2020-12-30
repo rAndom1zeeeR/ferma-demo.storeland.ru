@@ -2759,7 +2759,7 @@ function coupons() {
 // Функция показать больше для Каталога на главной странице
 function pdtCatalog() {
   $('#catalog .owl-carousel').owlCarousel({
-    items: 2,
+    items: 6,
     margin: 32,
     loop: false,
     rewind: true,
@@ -2780,9 +2780,12 @@ function pdtCatalog() {
     responsiveRefreshRate: 100,
     responsive: {
       0:{items:1},
-      320:{items:1},
-      481:{items:1},
-      991:{items:2, margin: 16}
+      320:{items:2},
+      481:{items:2},
+      641:{items:3},
+      768:{items:3},
+      992:{items:4},
+      1200:{items:6}
     }
   });
 }
@@ -2836,13 +2839,13 @@ $.fn.extend({
 function pdtSlider() {
   // Функция слайдер для "Акции" на главной странице
   $('#pdt__sales .owl-carousel').owlCarousel({
-    items: 1,
-    margin: 0,
+    items: 2,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
     nav: true,
-    navContainer: '',
+    navContainer: '#pdt__sales .owl-nav',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -2861,15 +2864,13 @@ function pdtSlider() {
       481:{items:1},
       641:{items:1},
       768:{items:1},
-      992:{items:1},
-      1200:{items:1},
-      1440:{items:1}
+      992:{items:2}
     }
   });
   // Функция слайдера для "Лидеры продаж" на главной странице
   $('#pdt__best .owl-carousel').owlCarousel({
-    items: 1,
-    margin: 0,
+    items: 4,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
@@ -2886,17 +2887,26 @@ function pdtSlider() {
     touchDrag: true,
     pullDrag: true,
     responsiveClass: true,
-    responsiveRefreshRate: 100
+    responsiveRefreshRate: 100,
+    responsive: {
+      0:{items:1},
+      320:{items:1},
+      481:{items:2},
+      641:{items:3},
+      768:{items:3},
+      992:{items:4},
+      1200:{items:4}
+    }
   });
   // Функция слайдера для Новинок на главной странице
   $('#pdt__new .owl-carousel').owlCarousel({
-    items: 5,
-    margin: 16,
+    items: 4,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
-    nav: false,
-    navContainer: '',
+    nav: true,
+    navContainer: '#pdt__new .owl-nav',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -2915,22 +2925,19 @@ function pdtSlider() {
       481:{items:2},
       641:{items:3},
       768:{items:3},
-      992:{items:3},
-      1200:{items:4},
-      1440:{items:5}
-    },
-    onInitialized: carouselInitialized,
-    onChanged: carouselInitialized
+      992:{items:4},
+      1200:{items:4}
+    }
   });
   // Функция слайдера для Хитов продаж на главной странице
   $('#pdt__sale .owl-carousel').owlCarousel({
-    items: 5,
-    margin: 16,
+    items: 4,
+    margin: 32,
     loop: false,
     rewind: true,
     lazyLoad: true,
-    nav: false,
-    navContainer: '',
+    nav: true,
+    navContainer: '#pdt__sale .owl-nav',
     navText: [ , ],
     dots: false,
     autoHeight: false,
@@ -2949,88 +2956,10 @@ function pdtSlider() {
       481:{items:2},
       641:{items:3},
       768:{items:3},
-      992:{items:3},
-      1200:{items:4},
-      1440:{items:5}
-    },
-    onInitialized: carouselInitialized,
-    onChanged: carouselInitialized
-  });
-  // Кнопки навигации
-  function carouselInitialized(event){
-    if (event.item.count > event.page.size) {
-      $('#pdt .block__nav .owl-nav').css('display', 'block');
-    }else{
-      $('#pdt .block__nav .owl-nav').css('display', 'none');
+      992:{items:4},
+      1200:{items:4}
     }
-  }
-  $('#pdt .block__nav .owl-prev').click(function(event) {
-    $('#pdt .owl-carousel').trigger('prev.owl.carousel');
   });
-  $('#pdt .block__nav .owl-next').click(function(event) {
-    $('#pdt .owl-carousel').trigger('next.owl.carousel');
-  });
-  // Табы в товарах
-  $('#pdt .nav__tab').on('click', function (event) {
-    event.preventDefault();
-    let content = $(this).attr('data-content');
-    $('#pdt [id^="pdt__"]').prepend('<div class="preloader"><div class="loading"></div></div>');
-    preload();
-    $('#pdt .nav__tab').removeClass('active')
-    $('#pdt [id^="pdt__"][data-content]').removeClass('active');
-    $(this).addClass('active');
-    $('#pdt [id^="pdt__"][data-content="'+ content +'"').addClass('active');
-  });
-
-  // Кол-во отображаемых товаров
-  if(getClientWidth() > 991){
-    var GOODS_INDEX = 6;
-  }else{
-    var GOODS_INDEX = 3;
-  }
-  // Весь каталог на главной
-  if(catalog_full){
-    var promises = $.map(catalog_full, function(el){
-      return $.ajax(el.href + '?only_body=1&goods_view_type=0')
-        .then(function(d){
-          let container = $('.products__container.' + el.id);
-          let $parentGridContainer = container.find('.products__list');
-          let $data = $(d);
-          let $newProducts = $data.find('.products__list').find('.product__item').parent();
-          let itemsLength = $data.find('.products__list .product__item').length;
-          let buttons = $('.products__container.' + el.id).find('.nav__buttons');
-          $newProducts = $newProducts.html();
-          // Вывод товаров
-          if(!$parentGridContainer.find('.products__list').length){
-            $parentGridContainer.append($newProducts);
-          }
-          // Добавляем кнопку "Показать все"
-          if(itemsLength > GOODS_INDEX){
-            buttons.append($('<button class="button button3"></button>'))
-            buttons.show();
-          }else{
-            buttons.hide();
-          }
-          // Показать все, скрыть
-          buttons.find('button').on('click', function (event){
-            event.preventDefault();
-            container.toggleClass('active')
-            $(this).toggleClass('active')
-          });
-          // Загрузка скриптов
-          lozad().observe();
-          Addto();
-          AddCart();
-          quantity();
-        });
-    });
-    $.when.apply(this, promises)
-      .then(function(){
-        // catalog_full = null;
-        // $('.products-container').show();
-      })
-  }
-
 }
 
 // Слайдер для главной страницы
@@ -3044,7 +2973,7 @@ function slideShow() {
     lazyLoad: true,
     nav: true,
     navText: [ , ],
-    navContainer: '',
+    navContainer: '#slideshow .owl-nav',
     dots: false,
     dotsContainer: '',
     URLhashListener: true,
@@ -3063,165 +2992,35 @@ function slideShow() {
 }
 // Новости
 function newsCarousel() {
-  if ($("#news .news_list_all.owl-carousel").length){
-    $("#news .news_list_all.owl-carousel").owlCarousel({
-      items: 4,
-      margin: 20,
-      loop: false,
-      rewind: true,
-      lazyLoad: true,
-      nav: false,
-      navContainer: '',
-      navText: [ , ],
-      dots: false,
-      autoHeight: false,
-      autoHeightClass: 'owl-height',
-      autoplay: false,
-      autoplayHoverPause: true,
-      smartSpeed: 500,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      responsiveClass: true,
-      responsiveRefreshRate: 100,
-      responsive: {
-        0:{items:1},
-        320:{items:1},
-        481:{items:2},
-        641:{items:3},
-        768:{items:3},
-        992:{items:4},
-        1200:{items:4}
-      },
-      onInitialized: carouselInitialized,
-      onChanged: carouselInitialized
-    });
-  }else{
-    $("#news .news_list_articles.owl-carousel").owlCarousel({
-      items: 4,
-      margin: 20,
-      loop: false,
-      rewind: true,
-      lazyLoad: true,
-      nav: false,
-      navContainer: '',
-      navText: [ , ],
-      dots: false,
-      autoHeight: false,
-      autoHeightClass: 'owl-height',
-      autoplay: false,
-      autoplayHoverPause: true,
-      smartSpeed: 500,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      responsiveClass: true,
-      responsiveRefreshRate: 100,
-      responsive: {
-        0:{items:1},
-        320:{items:1},
-        481:{items:2},
-        641:{items:3},
-        768:{items:3},
-        992:{items:4},
-        1200:{items:4}
-      },
-      onInitialize: carouselInitialized,
-      onInitialized: carouselInitialized,
-      onChanged: carouselInitialized
-    });
-    $("#news .news_list_mass_media.owl-carousel").owlCarousel({
-      items: 4,
-      margin: 20,
-      loop: false,
-      rewind: true,
-      lazyLoad: true,
-      nav: false,
-      navContainer: '',
-      navText: [ , ],
-      dots: false,
-      autoHeight: false,
-      autoHeightClass: 'owl-height',
-      autoplay: false,
-      autoplayHoverPause: true,
-      smartSpeed: 500,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      responsiveClass: true,
-      responsiveRefreshRate: 100,
-      responsive: {
-        0:{items:1},
-        320:{items:1},
-        481:{items:2},
-        641:{items:3},
-        768:{items:3},
-        992:{items:4},
-        1200:{items:4}
-      },
-      onInitialize: carouselInitialized,
-      onInitialized: carouselInitialized,
-      onChanged: carouselInitialized
-    });
-    $("#news .news_list_shop.owl-carousel").owlCarousel({
-      items: 4,
-      margin: 32,
-      loop: false,
-      rewind: true,
-      lazyLoad: true,
-      nav: false,
-      navContainer: '',
-      navText: [ , ],
-      dots: false,
-      autoHeight: false,
-      autoHeightClass: 'owl-height',
-      autoplay: false,
-      autoplayHoverPause: true,
-      smartSpeed: 500,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      responsiveClass: true,
-      responsiveRefreshRate: 100,
-      responsive: {
-        0:{items:1},
-        320:{items:1},
-        481:{items:2},
-        641:{items:3},
-        768:{items:3},
-        992:{items:3},
-        1200:{items:3},
-        1680:{items:4}
-      },
-      onInitialize: carouselInitialized,
-      onInitialized: carouselInitialized,
-      onChanged: carouselInitialized
-    });
-  }
-  // Кнопки навигации
-  function carouselInitialized(event){
-    if (event.item.count > event.page.size) {
-      $('#news .block__nav .owl-nav').css('display', 'block');
-    }else{
-      $('#news .block__nav .owl-nav').css('display', 'none');
+  $("#news .owl-carousel").owlCarousel({
+    items: 2,
+    margin: 32,
+    loop: false,
+    rewind: true,
+    lazyLoad: true,
+    nav: true,
+    navContainer: '#news .owl-nav',
+    navText: [ , ],
+    dots: false,
+    autoHeight: false,
+    autoHeightClass: 'owl-height',
+    autoplay: false,
+    autoplayHoverPause: true,
+    smartSpeed: 500,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    responsiveClass: true,
+    responsiveRefreshRate: 100,
+    responsive: {
+      0:{items:1},
+      320:{items:1},
+      481:{items:1},
+      641:{items:1},
+      768:{items:1},
+      992:{items:2},
+      1200:{items:2}
     }
-  }
-  $('#news .block__nav .owl-prev').click(function(event) {
-    $('#news .owl-carousel').trigger('prev.owl.carousel');
-  });
-  $('#news .block__nav .owl-next').click(function(event) {
-    $('#news .owl-carousel').trigger('next.owl.carousel');
-  });
-  // Табы в новостях
-  $('#news .nav__tab').on('click', function (event) {
-    event.preventDefault();
-    let content = $(this).attr('data-content');
-    $('#news [class^="news_list_"]').prepend('<div class="preloader small"><div class="loading"></div></div>');
-    preload();
-    $('#news .nav__tab').removeClass('active')
-    $('#news [class^="news_list_"]').removeClass('active');
-    $(this).addClass('active');
-    $('#news [class^="news_list_"][data-content="'+ content +'"').addClass('active');
   });
 }
 
@@ -3330,7 +3129,52 @@ function OpenMenu() {
 
 // Дополнительные пункты меню в шапке Перенос пунктов меню
 function mainnavHeader(){
-  let mainnav = $('.header__menu .mainnav');
+  let mainnav = $('header .menu .mainnav');
+  let overMenuExist = mainnav.find('.overflowMenu li').length;
+  if(overMenuExist){
+    mainnav.find('.overflowMenu li').removeClass('mainnav__replaced');
+    mainnav.find('.mainnav__more').remove();
+    mainnav.find('.overflowMenu li').each(function(){
+      mainnav.find('.mainnav__list').append($(this));
+    });
+  }
+  let menuWidth = mainnav.width();
+  let menuCount = mainnav.find('.mainnav__list li').length + 1;
+  let nextCheck = 0;
+  for(let i=1; i < menuCount;  i++){
+    let currentWidth = parseInt(Math.ceil(mainnav.find('.mainnav__list li:nth-child('+i+')').width())) + 16;
+    nextCheck += currentWidth;
+    if(nextCheck > menuWidth){
+      let a = i;
+      for(a;a < menuCount;a++){
+        mainnav.find('.mainnav__list li:nth-child('+ a +')').addClass('mainnav__replaced');
+      }
+      mainnav.find('.mainnav__replaced').each(function(){
+        mainnav.find('.overflowMenu').append($(this));
+      });
+      mainnav.find('.mainnav__list').append('<li class="mainnav__item mainnav__more"><a class="mainnav__link">Еще...</a></li>');
+      mainnav.find('.mainnav__more').on('click',function(){
+        mainnav.find('.overflowMenu').hasClass('opened') ? mainnav.find('.overflowMenu').removeClass('opened') : mainnav.find('.overflowMenu').addClass('opened');
+        mainnav.hasClass('opened') ? mainnav.removeClass('opened') : mainnav.addClass('opened');
+      });
+      $(function($){
+        $(document).mouseup(function (e){
+          let div =  mainnav.find('.overflowMenu.opened');
+          let btn =  mainnav.find('.mainnav__more');
+          if (!div.is(e.target) && div.has(e.target).length === 0 && !btn.is(e.target)) {
+            div.removeClass('opened');
+            mainnav.removeClass('opened');
+          }
+        });
+      });
+      return false;
+    }
+  }
+}
+
+// Дополнительные пункты меню в шапке Перенос пунктов меню
+function mainnavFooter(){
+  let mainnav = $('footer .menu .mainnav');
   let overMenuExist = mainnav.find('.overflowMenu li').length;
   if(overMenuExist){
     mainnav.find('.overflowMenu li').removeClass('mainnav__replaced');
@@ -3479,6 +3323,7 @@ $(document).ready(function(){
   priceDiff();
   monthNames();
   mainnavHeader();
+  mainnavFooter();
   recViewed();
   // Ленивая загрузка
   $(function(){
@@ -3549,11 +3394,89 @@ $(window).resize(function(){
   }
 });
 
-
-
-
-
-
+// Анимация объектов
+function gsapAnim(){
+  gsap.registerPlugin(ScrollTrigger);
+  // Анимация в промо
+  gsap.to(".promo__image, .promo__border", {
+    scrollTrigger: {
+      trigger: "#promo",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 1
+  });
+  // Анимация в обратном звонке фона
+  gsap.to("#callback .callback__image", {
+    scrollTrigger: {
+      trigger: "#callback",
+      toggleActions: "restart pause resume pause"
+    },
+    scale: 1,
+    duration: 1
+  });
+  // Анимация в обратном звонке полей
+  gsap.to("#callback .form__field", {
+    scrollTrigger: {
+      trigger: "#callback",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 1
+  });
+  // Анимация в обратном звонке полей
+  gsap.to("#callback .callback__subtitle", {
+    scrollTrigger: {
+      trigger: "#callback",
+      toggleActions: "restart pause resume pause"
+    },
+    y: 0,
+    duration: 1
+  });
+  // Анимация преимуществ
+  gsap.to(".advantages__item:nth-child(1)", {
+    scrollTrigger: {
+      trigger: ".advantages",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 1.5
+  });
+  gsap.to(".advantages__item:nth-child(2)", {
+    scrollTrigger: {
+      trigger: ".advantages",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 2
+  });
+  gsap.to(".advantages__item:nth-child(3)", {
+    scrollTrigger: {
+      trigger: ".advantages",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 2.5
+  });
+  // Анимация описания на главной
+  gsap.to("#mainbody .body", {
+    scrollTrigger: {
+      trigger: "#mainbody",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 1
+  });
+  // Анимация описания на главной
+  gsap.to("footer .contacts__block", {
+    scrollTrigger: {
+      trigger: "#mainbody",
+      toggleActions: "restart pause resume pause"
+    },
+    x: 0,
+    duration: 1
+  });
+}
 
 
 
