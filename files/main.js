@@ -2985,9 +2985,7 @@ function slideShow() {
     dotsSpeed: 400,
     mouseDrag: true,
     touchDrag: true,
-    pullDrag: true,
-    animateOut: 'slideOutLeft',
-    animateIn: 'slideInRight'
+    pullDrag: true
   });
 }
 // Новости
@@ -3325,6 +3323,8 @@ $(document).ready(function(){
   mainnavHeader();
   mainnavFooter();
   recViewed();
+
+  $('.select').styler();
   // Ленивая загрузка
   $(function(){
     const observer = lozad(); // lazy loads elements with default selector as '.lozad'
@@ -3401,7 +3401,7 @@ function gsapAnim(){
   gsap.to(".promo__image, .promo__border", {
     scrollTrigger: {
       trigger: "#promo",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 1
@@ -3410,7 +3410,7 @@ function gsapAnim(){
   gsap.to("#callback .callback__image", {
     scrollTrigger: {
       trigger: "#callback",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     scale: 1,
     duration: 1
@@ -3419,7 +3419,7 @@ function gsapAnim(){
   gsap.to("#callback .form__field", {
     scrollTrigger: {
       trigger: "#callback",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 1
@@ -3428,7 +3428,7 @@ function gsapAnim(){
   gsap.to("#callback .callback__subtitle", {
     scrollTrigger: {
       trigger: "#callback",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     y: 0,
     duration: 1
@@ -3437,7 +3437,7 @@ function gsapAnim(){
   gsap.to(".advantages__item:nth-child(1)", {
     scrollTrigger: {
       trigger: ".advantages",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 1.5
@@ -3445,7 +3445,7 @@ function gsapAnim(){
   gsap.to(".advantages__item:nth-child(2)", {
     scrollTrigger: {
       trigger: ".advantages",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 2
@@ -3453,7 +3453,7 @@ function gsapAnim(){
   gsap.to(".advantages__item:nth-child(3)", {
     scrollTrigger: {
       trigger: ".advantages",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 2.5
@@ -3462,7 +3462,7 @@ function gsapAnim(){
   gsap.to("#mainbody .body", {
     scrollTrigger: {
       trigger: "#mainbody",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 1
@@ -3471,7 +3471,7 @@ function gsapAnim(){
   gsap.to("footer .contacts__block", {
     scrollTrigger: {
       trigger: "#mainbody",
-      toggleActions: "restart pause resume pause"
+      toggleActions: "restart pause resume none"
     },
     x: 0,
     duration: 1
