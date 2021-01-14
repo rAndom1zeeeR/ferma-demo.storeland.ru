@@ -7,7 +7,7 @@
   {% ELSE %}
   <div class="fastOrderForm">
     <form action="{ORDER_STAGE_CONFIRM_WITHOUT_DOMAIN_URL}" method="post" class="fastOrder__form" novalidate="novalidate">
-      <!-- Данные покупателя -->
+	    <!-- Данные покупателя -->
       <div class="account" order="1">
         <h3 class="title"><span>Личные данные</span></h3>
         <div class="form__list">
@@ -58,7 +58,7 @@
             {% IFNOT country_list_empty %}
             <div class="form__fields fields-1 selectBox {% IF SETTINGS_ORDER_FIELDS_COUNTRY=1 %}required{% ENDIF %}">
               <label for="quickDeliveryCountry" {% IF SETTINGS_ORDER_FIELDS_COUNTRY=1 %}class="required"{% ENDIF %}><span>Страна</span>{% IF SETTINGS_ORDER_FIELDS_COUNTRY=1 %}<em>*</em>{% ENDIF %}</label>
-              <select id="quickDeliveryCountry" name="form[delivery][country_id]" class="form__input {% IF SETTINGS_ORDER_FIELDS_COUNTRY=1 %}required{% ENDIF %}">
+              <select id="quickDeliveryCountry" name="form[delivery][country_id]" class="form__input select {% IF SETTINGS_ORDER_FIELDS_COUNTRY=1 %}required{% ENDIF %}">
                 {% FOR country_list %}
                   <option value="{country_list.ID}" {% IF country_list.ID=ORDER_FORM_DELIVERY_COUNTRY_ID %}selected="selected"{% ENDIF %}>
                     {country_list.NAME}
@@ -105,7 +105,7 @@
           <div class="form__fields deliveryDate {% IF SETTINGS_ORDER_FIELDS_CONVENIENT_TIME=1 %}required{% ENDIF %}">
             <div class="form__field deliveryConvenientDate selectBox">
               <label for="deliveryConvenientDate" {% IF SETTINGS_ORDER_FIELDS_CONVENIENT_TIME=1 %}class="required"{% ENDIF %}><span>Время доставки</span>{% IF SETTINGS_ORDER_FIELDS_CONVENIENT_TIME=1 %}<em>*</em>{% ENDIF %}</label>
-              <select class="form__input" name="form[delivery][convenient_time_from]">
+              <select class="form__input select" name="form[delivery][convenient_time_from]">
                 {% FOR convenient_time_from_list %}
                   <option value="{convenient_time_from_list.HOUR_INT}" {% IF convenient_time_from_list.SELECTED %}selected="selected"{% ENDIF %}>{convenient_time_from_list.HOUR}</option>
                 {% ENDFOR %}
@@ -113,7 +113,7 @@
             </div>
             <div class="form__field deliveryConvenientDate selectBox">
               <label for="deliveryConvenientDate" {% IF SETTINGS_ORDER_FIELDS_CONVENIENT_TIME=1 %}class="required"{% ENDIF %}><span>Время доставки</span>{% IF SETTINGS_ORDER_FIELDS_CONVENIENT_TIME=1 %}<em>*</em>{% ENDIF %}</label>
-              <select class="form__input" name="form[delivery][convenient_time_to]">
+              <select class="form__input select" name="form[delivery][convenient_time_to]">
                 {% FOR convenient_time_to_list %}
                   <option value="{convenient_time_to_list.HOUR_INT}" {% IF convenient_time_to_list.SELECTED %}selected="selected"{% ENDIF %}>{convenient_time_to_list.HOUR}</option>
                 {% ENDFOR %}
@@ -128,7 +128,7 @@
       <div class="delivery" order="3"> 
         <h3 class="title" title="Выберите удобный для вас способ доставки"><span>Cпособ доставки</span></h3>
         <!-- Старый скрытый вариант способа доставки -->
-        <div class="delivery__selects">
+        <div class="delivery__selects" style="display: none;">
           <div class="delivery__select selectBox form__fields">
             <select class="form__input">
               {% FOR order_delivery %}
@@ -157,7 +157,7 @@
           </div>
         </div>
         <!-- Новый Cпособ доставки -->
-        <div class="order__delivery" style="display: none;">
+        <div class="order__delivery">
           {% FOR order_delivery %}
             <div class="delivery__option" rel="{order_delivery.ID}">
               <input type="radio" id="deliveryId{order_delivery.ID}" name="form[delivery][id]" value="{order_delivery.ID}" class="deliveryRadio square delivery__radio"
@@ -171,8 +171,8 @@
                 checked="checked"
               {% ENDIF %}
               />
-              <div class="delivery__desc">{order_delivery.DESC}</div>
               <label for="deliveryId{order_delivery.ID}" class="delivery__name">{order_delivery.NAME}</label>
+	            <div class="delivery__desc">{order_delivery.DESC}</div>
               <div class="delivery__fields">
                 <label>Стоимость доставки:</label><span class="delivery__price">{order_delivery.END_PRICE | money_format}</span>
               </div>
@@ -205,11 +205,12 @@
       </div>
       <!-- Способ оплаты -->
       <div class="payment" order="4">
+	      <h3 class="title" title="Выберите удобный для вас способ оплаты заказа"><span>Cпособ оплаты</span></h3>
         <!-- Старый скрытый способ оплаты -->
+	      <div class="hiddenRadio" style="display: none;">
         {% FOR order_delivery %}
           {% IFNOT order_delivery.available_payment_list_empty  %}
             <div class="order__payment" rel="{order_delivery.ID}"> 
-              <h3 class="title" title="Выберите удобный для вас способ оплаты заказа"><span>Cпособ оплаты</span></h3>
               <div class="order__paymentSelect selectBox form__fields">
                 <select class="paymentSelect form__input">
                   {% FOR available_payment_list %}
@@ -226,15 +227,15 @@
             </div>
           {% ENDIF %}
         {% ENDFOR %}
+	      </div>
         <!-- Новый способ оплаты -->
-        <div class="hiddenRadio" style="display: none;">
         {% FOR order_delivery %}
           {% IFNOT order_delivery.available_payment_list_empty %}
             <div class="order__payment" rel="{order_delivery.ID}" style="display: none;">
               {% FOR available_payment_list %}  
               <div class="payment__option">
+	              <input type="radio" id="quickPaymentId{order_delivery.ID}_{order_delivery.available_payment_list.ID}" name="form[payment][id]" deliveryid="{order_delivery.available_payment_list.ID}" value="{order_delivery.available_payment_list.ID}" class="paymentRadio square required" {% IFNOT ORDER_FORM_PAYMENT_ID %}{% IF order_delivery.available_payment_list.first %}checked="checked"{% ENDIF %}{% ELSEIF order_delivery.available_payment_list.ID = ORDER_FORM_PAYMENT_ID %}checked="checked"{% ENDIF %}/>
                 <label for="quickPaymentId{order_delivery.ID}_{order_delivery.available_payment_list.ID}" class="payment__name">{order_delivery.available_payment_list.NAME}</label>
-                <input type="radio" id="quickPaymentId{order_delivery.ID}_{order_delivery.available_payment_list.ID}" name="form[payment][id]" deliveryid="{order_delivery.available_payment_list.ID}" value="{order_delivery.available_payment_list.ID}" class="paymentRadio square required" {% IFNOT ORDER_FORM_PAYMENT_ID %}{% IF order_delivery.available_payment_list.first %}checked="checked"{% ENDIF %}{% ELSEIF order_delivery.available_payment_list.ID = ORDER_FORM_PAYMENT_ID %}checked="checked"{% ENDIF %}/>
                 <!-- Сообщение для пользователя -->
                 {% IF order_delivery.available_payment_list.MESSAGE %}
                   <div class="payment__desc">{order_delivery.available_payment_list.MESSAGE}</div>
@@ -245,25 +246,23 @@
           {% ENDIF %}
         {% ENDFOR %}
         </div>
-      </div>
-
-      <!-- Если скидки по купонам активированы в панели управления магазином -->
-      {% IF ORDER_DISCOUNT_COUPON_IS_ENABLED %}
-      <div class="coupons" order="5">
-        <h3 class="title"><span>Код купона на скидку</span></h3>
-        <div class="form__fields coupon__order">
-          <input type="hidden" name="oldPromoDiscount" value="0">
-          <input type="hidden" name="orderSumDefaul" value="{CART_SUM_NOW}">
-          <input type="text" id="coupon__code" name="form[coupon_code]" value="{ORDER_FORM_COUPON_CODE}" class="form__input" placeholder="Введите код"/>
-          <a href="javascript:void(0)" class="coupon__button" title="Применить"></a>
-          <a href="javascript:void(0)" class="coupon__reset" title="Сбросить"></a>
-        </div>
-      </div>
-      {% ENDIF %}
+	    <!-- Если скидки по купонам активированы в панели управления магазином -->
+	    {% IF ORDER_DISCOUNT_COUPON_IS_ENABLED %}
+	    <div class="coupons" order="5">
+		    <h3 class="title"><span>Код купона на скидку</span></h3>
+		    <div class="form__fields coupon__order">
+			    <input type="hidden" name="oldPromoDiscount" value="0">
+			    <input type="hidden" name="orderSumDefaul" value="{CART_SUM_NOW}">
+			    <input type="text" id="coupon__code" name="form[coupon_code]" value="{ORDER_FORM_COUPON_CODE}" class="form__input" placeholder="Введите код"/>
+			    <a href="javascript:void(0)" class="coupon__button" title="Применить"></a>
+			    <a href="javascript:void(0)" class="coupon__reset" title="Сбросить"></a>
+		    </div>
+	    </div>
+	    {% ENDIF %}
       <!-- END Если скидки по купонам активированы в панели управления магазином -->
 	    <div class="total__buttons">
 		    <input type="hidden" name="hash" value="{HASH}" />
-		    <a id="closeOrder" class="button button" title="Отменить заказ"><span>Отменить </span><span>заказ</span></a>
+		    <a id="closeOrder" class="button button2" title="Отменить заказ"><span>Отменить </span><span>заказ</span></a>
 		    <button type="submit" class="button disabled" titleOFF="Оформить заказ" data-tooltip="Заполните все поля"><span>Оформить </span><span>заказ</span></button>
 		    <div class="total__pp">Нажимая на кнопку &laquo;Оформить заказ&raquo;, Вы соглашаетесь с <a data-fancybox data-src="#fancybox__pp" href="javascript:;">правилами обработки данных</a></div>
 	    </div>

@@ -720,34 +720,7 @@ function catalogpage() {
   $('.filter__item input').click(function(){
     $(this)[0].form.submit();
   });
-  
-  // Открытие сортировки и показать по
-  $('.selectBox .select .label').on('click',function(){
-    if($(this).parent().parent().hasClass('clicked')){
-      if(!$(this).parent().parent().hasClass('opened')){
-        $(this).parent().parent().addClass('opened');
-        $(this).parent().parent().removeClass('clicked');
-      }
-    }
-  });
-  // Закрытие сортировки и показать по
-  $(document).mouseup(function (e){
-    let selectDown = $(".selectBox .dropdown");
-    if (!selectDown.is(e.target)) {
-      selectDown.parent().parent().removeClass('opened');
-      setTimeout(function(){
-        selectDown.parent().parent().addClass('clicked');
-      }, 1);
-    }
-  });
-  // Обновление названия сортировки
-  let selectText = $('.toolbar .sort-by.selectBox .dropdown .dropdown__item[selected]').text();
-  let lengthText = selectText.length;
-  if (lengthText == '0' ){
-    selectText = 'Название сортировки';
-  }
-  $('.toolbar .sort-by.selectBox .select .label span').text(selectText);
-  
+
   // Боковое меню сохранение открытой вложенности
   $('.collapsible:not(".active")').find('.collapsible__content').css('display', 'none');
   $('.collapsible__click').click(function(event){
@@ -789,8 +762,8 @@ function priceFilter() {
   function priceInputsChangeWidthByChars() {
     // Если есть блок указания минимальной цены
     if(priceInputMin.length) {
-      priceInputMin.css('width', (priceInputMin.val().length*7 + 20) + 'px');
-      priceInputMax.css('width', (priceInputMax.val().length*7 + 20) + 'px');
+      priceInputMin.css('width', (priceInputMin.val().length*7 + 30) + 'px');
+      priceInputMax.css('width', (priceInputMax.val().length*7 + 50) + 'px');
     }
   }
   
@@ -2293,6 +2266,10 @@ function quickOrder(formSelector) {
 			OrderScripts();
 			OrderScriptsSelect();
       coupons();
+      // Стили для новых селектов
+      setTimeout(function(){
+        $('.select').styler();
+      }, 100);
       $('.fastOrder__form').validate({
         errorPlacement: function(error, element) { }
       });
@@ -2628,6 +2605,10 @@ function startOrder(){
       OrderScripts();
       OrderScriptsSelect();
       showPass();
+      // Стили для новых селектов
+      setTimeout(function(){
+        $('.select').styler();
+      }, 100);
       $(".form__phone").mask("+7 (999) 999-9999");
       $("#sites_client_phone").mask("+7 (999) 999-9999");
       $('#closeOrder').on('click', function() {
@@ -3022,28 +3003,21 @@ function newsCarousel() {
   });
 }
 
-// Функции для главной страницы
+// Вы смотрели
 function recViewed() {
-  $('.viewed .owl-carousel').owlCarousel({
-    items: 1,
-    margin: 0,
-    loop: false,
-    rewind: true,
-    lazyLoad: true,
-    nav: true,
-    navContainer: '.viewed .owl-nav',
-    navText: [ , ],
-    dots: false,
-    autoHeight: false,
-    autoHeightClass: 'owl-height',
-    autoplay: false,
-    autoplayHoverPause: true,
-    smartSpeed: 500,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    responsiveClass: true,
-    responsiveRefreshRate: 100
+  let viewedContent = $('.viewed__items');
+  let viewedCount = viewedContent.find('.viewed__item').length;
+  if(viewedCount<=3){ viewedContent.find('.viewed__buttons').hide(); }
+  $('.viewed__buttons .showAll').on('click',function(){
+    if($(this).hasClass('active')){
+      $(this).removeClass('active').find('span').text("Все отзывы");
+      viewedContent.find('.viewed__item').removeClass('show');
+      console.log('werwerd')
+    }else{
+      console.log('asdasd')
+      $(this).addClass('active').find('span').text("Скрыть все");
+      viewedContent.find('.viewed__item').addClass('show');
+    }
   });
 }
 
@@ -3323,7 +3297,7 @@ $(document).ready(function(){
   mainnavHeader();
   mainnavFooter();
   recViewed();
-
+  // Стили для новых селектов
   $('.select').styler();
   // Ленивая загрузка
   $(function(){
@@ -3479,7 +3453,18 @@ function gsapAnim(){
 }
 
 
-
+$(document).ready(function(){
+  $('.viewed .product__open').on('click', function (event){
+    event.preventDefault();
+    var item = $(this).parent().parent().parent();
+    console.log(item)
+    if(item.hasClass('opened')){
+      item.removeClass('opened');
+    }else{
+      item.addClass('opened');
+    }
+  });
+});
 
 
 
