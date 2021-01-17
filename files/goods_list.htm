@@ -290,6 +290,7 @@
 	    </div>
 	  </div>
     {% ELSE %}
+	  <!-- Вывод товаров СПИСКОМ -->
     <div class="products__list">
       {% FOR goods %}
 	    <div class="product__item {% IF SETTINGS_GOODS_DONT_PUT_TO_CART_MORE_THAN_AVAILABLE && goods.MAX_REST_VALUE=0 %}empty{% ENDIF %}" itemscope itemtype="https://schema.org/Product">

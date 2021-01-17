@@ -12,9 +12,9 @@
         <div class="CompareGoods__switch"></div>
         <span class="label">Показать различия</span>
       </div>
-      <div class="nav">
-        <div class="prev"></div>
-        <div class="next"></div>
+      <div class="owl-nav">
+        <div class="owl-prev"></div>
+        <div class="owl-next"></div>
       </div>
     </div>
     <!-- Тело таблицы сравнения товаров -->
@@ -30,7 +30,7 @@
               <a href="{goods_mod_info.GOODS_MOD_URL}" title="Перейти к странице &laquo;{goods_mod_info.GOODS_NAME}&raquo;">
                 <img src="{% IF goods_mod_info.GOODS_IMAGE_EMPTY %}{ASSETS_IMAGES_PATH}no-photo-icon.png?design=florist{% ELSE %}{goods_mod_info.GOODS_IMAGE_SMALL}{% ENDIF %}" rel="{goods_mod_info.GOODS_IMAGE_ID}" class="CompareGoodsImageMain{goods_mod_info.GOODS_MOD_ID} goods-image-small" alt="{goods_mod_info.GOODS_NAME}" />
               </a>
-              <a class="remove" href="{COMPARE_DELETE_URL}?id={goods_mod_info.GOODS_MOD_ID}" title="Убрать из таблицы сравнения"><i class="material-icons">close</i></a>
+              <a class="remove" href="{COMPARE_DELETE_URL}?id={goods_mod_info.GOODS_MOD_ID}" title="Убрать из таблицы сравнения"><i class="icon-close"></i></a>
             </div>
           </div>
         {% ENDFOR %}
@@ -212,7 +212,7 @@
     <div class="buttons">
       <a href="#" class="CompareGoodsHideSelected button hide" title="Скрыть выбранные" style="display:none;"><i class="icon-visibility_off"></i><span>Скрыть</span><span class="hide"> выбранные</span></a>  
       <a href="#" class="CompareGoodsShowAll button" title="Отобразить скрытые" style="display:none;"><i class="icon-visibility"></i><span>Отобразить</span><span class="hide"> скрытые</span></a>
-      <a href="{COMPARE_RESET_URL}" class="button" title="Очистить список сравнения"><i class="material-icons">close</i><span>Очистить</span><span class="hide"> список</span></a>
+      <a href="{COMPARE_RESET_URL}" class="button" title="Очистить список сравнения"><i class="icon-close"></i><span>Очистить</span><span class="hide"> список</span></a>
     </div>
     <!-- END Управление выбранными строками -->
   </div>

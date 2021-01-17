@@ -199,7 +199,7 @@
 										<div class="showPassBlock"><a href="#" rel="Скрыть пароль" class="showPass">Показать пароль</a></div>
 										{% ENDIF %}
 										<div id="capslock">
-											<div><i class="material-icons">warning</i></div>
+											<div><i class="icon-warning"></i></div>
 											<div><strong>Caps Lock включен.</strong></div>
 											<div>Пароль может быть введен неверно.</div>
 										</div>
@@ -1409,7 +1409,7 @@
 			
 			<div class="inner">
 				{% IFNOT IS_FULL_CATALOG %}
-				<div class="block__left sidebar {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods %}hide{% ENDIF %}">
+				<div class="block__left sidebar {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods || MOD_LNAME = callback || MOD_LNAME = news || MOD_LNAME = feedback || MOD_LNAME = page %}hide{% ENDIF %}">
 					<!-- Если в тарифном плане подключен модуль фильтров по товарам -->
 					{% IF SHOW_GOODS_FILTERS %}
 					<div class="sidebar__block filters {% FOR filter_attr_list %}{% FOR values %}{% IF filter_attr_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %} {% FOR filter_prop_list %}{% FOR values %}{% IF filter_prop_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %}" id="filters" data-content="filters">
@@ -1655,7 +1655,7 @@
 					{% ENDIF %}
 				</div>
 				{% ENDIF %}
-				<div class="block__right {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods %}full{% ENDIF %}">
+				<div class="block__right {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods || MOD_LNAME = callback || MOD_LNAME = news || MOD_LNAME = feedback || MOD_LNAME = page %}full{% ENDIF %}">
 					<div class="body">{BODY}</div>
 				</div>
 			</div>
@@ -1829,11 +1829,9 @@
 					{ANTISPAM_CODE}
 					<div class="form__fields">
 						<div class="form__field">
-							<i class="icon-user"></i>
 							<input id="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PERSON}]" class="form__input form__person" type="text" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PERSON}]" value="{FORM_CALLBACK_PERSON}" placeholder="Владимир П." autocomplete="off"/>
 						</div>
 						<div class="form__field">
-							<i class="icon-phone"></i>
 							<input id="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" class="form__input form__phone" type="tel" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" value="{FORM_CALLBACK_PHONE}" placeholder="+7 (987) 654-3210" autocomplete="off"/>
 						</div>
 					</div>
@@ -1858,11 +1856,9 @@
 					{ANTISPAM_CODE}
 					<div class="form__fields">
 						<div class="form__field">
-							<i class="icon-user"></i>
 							<input class="form__input form__person form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PERSON}]" type="text" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PERSON}]" value="{FORM_CALLBACK_PERSON}" placeholder="Владимир П." autocomplete="off"/>
 						</div>
 						<div class="form__field">
-							<i class="icon-phone"></i>
 							<input class="form__input form__phone form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" type="tel" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" value="{FORM_CALLBACK_PHONE}" placeholder="+7 (987) 654-3210" autocomplete="off"/>
 						</div>
 					</div>
@@ -1895,17 +1891,11 @@
 					{ANTISPAM_CODE}
 					<!-- Для использования почты для уведомлений необходимо удалить блок с телефоном -->
 					<div class="form__fields">
-						<div class="form__field">
-							<i class="icon-phone"></i>
-							<input class="form__input form__phone" type="tel" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" value="{FORM_CALLBACK_PHONE}" placeholder="+7 (987) 654-3210" autocomplete="off"/>
-						</div>
+						<input class="form__input form__phone" type="tel" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_PHONE}]" value="{FORM_CALLBACK_PHONE}" placeholder="+7 (987) 654-3210" autocomplete="off"/>
 					</div>
 					<!-- Для использования почты для уведомлений необходимо удалить ниже style="display: none;" -->
 					<div class="form__fields" style="display: none;">
-						<div class="form__field">
-							<i class="icon-mail"></i>
-							<input class="form__input form__email" type="email" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_EMAIL}]" value="{FORM_CALLBACK_EMAIL}" placeholder="email@email.ru *" autocomplete="off"/>
-						</div>
+						<input class="form__input form__email" type="email" name="form[{ANTISPAM_FORM_FIELD_NAME_CALLBACK_EMAIL}]" value="{FORM_CALLBACK_EMAIL}" placeholder="email@email.ru *" autocomplete="off"/>
 					</div>
 					<div class="form__buttons">
 						<button type="submit" title="Уведомить" class="form__button button">Уведомить</button>
