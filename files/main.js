@@ -2334,6 +2334,12 @@ function OrderScripts() {
     let cartSumTotalHide = $('.cartSumDiscount:eq(0) .num').text().toString().replace(/\s/g, '');
     let newSum = parseInt(cartSumTotalHide) + parseInt(priceBlock.text());
     $('.cartSumTotal .num').text(newSum);
+    console.log(price)
+    console.log(zonePrice)
+    console.log(priceBlock)
+    console.log(cartSumTotalHide)
+    console.log(newSum)
+    console.log(priceBlock.text())
     // Скрытие необязательных полей при выборе самовывоза
     if($(this).data('name') == 'Самовывоз'){
       $('.fastOrder__form').addClass('pickup');
@@ -2997,9 +3003,7 @@ function recViewed() {
     if($(this).hasClass('active')){
       $(this).removeClass('active').find('span').text("Все отзывы");
       viewedContent.find('.viewed__item').removeClass('show');
-      console.log('werwerd')
     }else{
-      console.log('asdasd')
       $(this).addClass('active').find('span').text("Скрыть все");
       viewedContent.find('.viewed__item').addClass('show');
     }
@@ -3063,7 +3067,7 @@ function OpenMenu() {
   });
 
   // Открытие каталога с сохранением вложенности
-  $('.catalog__item .open').click(function(event){
+  $('.catalog__item .open').on('click', function(event){
     event.preventDefault();
     if ($(this).closest('.parent').hasClass('opened')) {
       $(this).parent().next('.sub').slideUp(600);
@@ -3076,9 +3080,11 @@ function OpenMenu() {
     }
   });
 
-  $('.subscribe').on('click', function(event){
+  // Вы смотрели, открытие информации
+  $('.viewed .product__open').on('click', function (event){
     event.preventDefault();
-    $('#subscribe .form__button').click();
+    var item = $(this).parent().parent().parent();
+    item.hasClass('opened') ? item.removeClass('opened') : item.addClass('opened');
   });
 }
 
@@ -3280,6 +3286,7 @@ $(document).ready(function(){
   mainnavHeader();
   mainnavFooter();
   recViewed();
+  gsapAnim();
   // Стили для новых селектов
   $('.select').styler();
   // Ленивая загрузка
@@ -3355,68 +3362,71 @@ $(window).resize(function(){
 function gsapAnim(){
   gsap.registerPlugin(ScrollTrigger);
   // Анимация в промо
-  gsap.to(".promo__image, .promo__border", {
+  gsap.from(".promo__image", {
     scrollTrigger: {
       trigger: "#promo",
       toggleActions: "restart pause resume none"
     },
-    x: 0,
+    x: '50%',
+    duration: 1
+  });
+  gsap.from(".promo__border", {
+    scrollTrigger: {
+      trigger: "#promo",
+      toggleActions: "restart pause resume none"
+    },
+    x: '-50%',
     duration: 1
   });
   // Анимация в обратном звонке фона
-  gsap.to("#callback .callback__image", {
+  gsap.from("#callback .callback__image", {
     scrollTrigger: {
       trigger: "#callback",
       toggleActions: "restart pause resume none"
     },
-    scale: 1,
+    scale: 0.8,
     duration: 1
   });
   // Анимация в обратном звонке полей
-  gsap.to("#callback .form__field", {
+  gsap.from("#callback .form__field", {
     scrollTrigger: {
       trigger: "#callback",
       toggleActions: "restart pause resume none"
     },
-    x: 0,
+    x: '50%',
     duration: 1
   });
   // Анимация в обратном звонке полей
-  gsap.to("#callback .callback__subtitle", {
+  gsap.from("#callback .callback__subtitle", {
     scrollTrigger: {
       trigger: "#callback",
       toggleActions: "restart pause resume none"
     },
-    y: 0,
+    y: '50%',
     duration: 1
   });
   // Анимация преимуществ
-  gsap.to(".advantages__item:nth-child(1)", {
+  gsap.from(".advantages__item", {
     scrollTrigger: {
       trigger: ".advantages",
       toggleActions: "restart pause resume none"
     },
-    x: 0,
-    duration: 1.5
-  });
-  gsap.to(".advantages__item:nth-child(2)", {
-    scrollTrigger: {
-      trigger: ".advantages",
-      toggleActions: "restart pause resume none"
-    },
-    x: 0,
-    duration: 2
-  });
-  gsap.to(".advantages__item:nth-child(3)", {
-    scrollTrigger: {
-      trigger: ".advantages",
-      toggleActions: "restart pause resume none"
-    },
-    x: 0,
-    duration: 2.5
+    x: '50%',
+    duration: 1.5,
+    stagger: .5,
+    delay: 1
   });
   // Анимация описания на главной
-  gsap.to("#mainbody .body", {
+  gsap.from("#mainbody .body", {
+    scrollTrigger: {
+      trigger: "#mainbody",
+      toggleActions: "restart pause resume none"
+    },
+    x: '-50%',
+    duration: 1
+  });
+  // Анимация описания на главной
+  gsap.from("footer .contacts__block", {
     scrollTrigger: {
       trigger: "#mainbody",
       toggleActions: "restart pause resume none"
@@ -3424,29 +3434,43 @@ function gsapAnim(){
     x: 0,
     duration: 1
   });
-  // Анимация описания на главной
-  gsap.to("footer .contacts__block", {
+
+  // Анимация в обратном звонке полей
+  gsap.from(".opinion__block", {
     scrollTrigger: {
-      trigger: "#mainbody",
+      trigger: ".productView__opinion",
       toggleActions: "restart pause resume none"
     },
-    x: 0,
+    x: '50%',
+    duration: 1,
+    stagger: .1,
+    delay: 1
+  });
+  // Анимация в обратном звонке полей
+  gsap.from(".opinion__labelText", {
+    scrollTrigger: {
+      trigger: ".productView__opinion",
+      toggleActions: "restart pause resume none"
+    },
+    y: '50%',
     duration: 1
   });
+  // Анимация категорий в каталоге
+  gsap.from(".catalogs__list > div", {
+    scrollTrigger: {
+      trigger: "#main",
+      toggleActions: "restart pause resume none"
+    },
+    y: '-50%',
+    duration: 1,
+    stagger: .1
+  });
+
+
 }
 
 
 $(document).ready(function(){
-  $('.viewed .product__open').on('click', function (event){
-    event.preventDefault();
-    var item = $(this).parent().parent().parent();
-    console.log(item)
-    if(item.hasClass('opened')){
-      item.removeClass('opened');
-    }else{
-      item.addClass('opened');
-    }
-  });
 });
 
 
