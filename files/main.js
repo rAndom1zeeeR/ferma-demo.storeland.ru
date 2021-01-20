@@ -3360,6 +3360,8 @@ $(window).resize(function(){
 
 // Анимация объектов
 function gsapAnim(){
+  // Время анимации
+  const durationTime = {duration: 1};
   gsap.registerPlugin(ScrollTrigger);
   // Анимация в промо
   gsap.from(".promo__image", {
@@ -3368,7 +3370,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: '50%',
-    duration: 1
+    durationTime
   });
   gsap.from(".promo__border", {
     scrollTrigger: {
@@ -3376,7 +3378,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: '-50%',
-    duration: 1
+    durationTime
   });
   // Анимация в обратном звонке фона
   gsap.from("#callback .callback__image", {
@@ -3385,7 +3387,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     scale: 0.8,
-    duration: 1
+    durationTime
   });
   // Анимация в обратном звонке полей
   gsap.from("#callback .form__field", {
@@ -3394,7 +3396,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: '50%',
-    duration: 1
+    durationTime
   });
   // Анимация в обратном звонке полей
   gsap.from("#callback .callback__subtitle", {
@@ -3403,7 +3405,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     y: '50%',
-    duration: 1
+    durationTime
   });
   // Анимация преимуществ
   gsap.from(".advantages__item", {
@@ -3423,7 +3425,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: '-50%',
-    duration: 1
+    durationTime
   });
   // Анимация описания на главной
   gsap.from("footer .contacts__block", {
@@ -3432,7 +3434,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: 0,
-    duration: 1
+    durationTime
   });
 
   // Анимация в обратном звонке полей
@@ -3442,7 +3444,7 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     x: '50%',
-    duration: 1,
+    durationTime,
     stagger: .1,
     delay: 1
   });
@@ -3453,8 +3455,9 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     y: '50%',
-    duration: 1
+    durationTime
   });
+
   // Анимация категорий в каталоге
   gsap.from(".catalogs__list > div", {
     scrollTrigger: {
@@ -3462,15 +3465,38 @@ function gsapAnim(){
       toggleActions: "restart pause resume none"
     },
     y: '-50%',
-    duration: 1,
-    stagger: .1
+    scale: .5,
+    immediateRender: true,
+    lazy: false
   });
-
+  // Анимация баннера в каталоге
+  gsap.from(".banner", {
+    scrollTrigger: {
+      trigger: "#main",
+      toggleActions: "restart pause resume none"
+    },
+    scale: .5,
+    immediateRender: true,
+    lazy: true
+  });
 
 }
 
 
 $(document).ready(function(){
+  //Кнопка выбора меню/каталога
+  const buttons = $('.addto__nav-item');
+  //Скрываем меню
+  $('[data-open="catalogMenu"] > [data-open="menu"]').hide();
+  buttons.on('click', function(){
+    let name = $(this).attr('data-open');
+    let content = $(this).parents().find('[data-open="'+ name +'"]');
+    $('.addto__nav-item').removeClass('active')
+    $(this).addClass('active')
+    $('[data-open="catalogMenu"] > [data-open]').hide()
+    content.show()
+  });
+
 });
 
 
