@@ -107,6 +107,9 @@
         </select>
       </div>
       <!-- /END Показывать по: -->
+	    {% IF SHOW_GOODS_PRICE_FILTERS || SHOW_GOODS_FILTERS %}
+	    <div class="filters__icon {% FOR filter_attr_list %}{% FOR values %}{% IF filter_attr_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %} {% FOR filter_prop_list %}{% FOR values %}{% IF filter_prop_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %}"><span>Фильтры</span></div>
+	    {% ENDIF %}
       <!-- Вид Таблица/Список -->
       <div class="view__type">
         {% IF GOODS_VIEW_TYPE=1 %}

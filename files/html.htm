@@ -189,12 +189,12 @@
 								{ANTISPAM_CODE}
 								<div class="form__list">
 									<div class="form__fields">
-										<label for="sites_client_mail" class="required">Электронная почта <em>*</em></label>
-										<input type="email" name="form[sites_client_mail]" value="{FORM_SITES_CLIENT_MAIL}" id="sites_client_mail"  maxlength="255" class="form__input email" placeholder="Email" required/>
+										<label class="required">Электронная почта <em>*</em></label>
+										<input type="email" name="form[sites_client_mail]" value="{FORM_SITES_CLIENT_MAIL}" maxlength="255" class="form__input sites_client_mail email" placeholder="Email" required/>
 									</div>
 									<div class="form__fields">
-										<label for="sites_client_pass" class="required">Пароль: <em>*</em></label>
-										<input type="password" id="sites_client_pass" name="form[sites_client_pass]" value="{FORM_SITES_CLIENT_PASS}" maxlength="50" minlength="6" class="form__input" placeholder="Пароль" onkeyup="checkCapsWarning(event)" onfocus="checkCapsWarning(event)" onblur="removeCapsWarning()" required/>
+										<label class="required">Пароль: <em>*</em></label>
+										<input type="password" name="form[sites_client_pass]" value="{FORM_SITES_CLIENT_PASS}" maxlength="50" minlength="6" class="form__input sites_client_pass" placeholder="Пароль" onkeyup="checkCapsWarning(event)" onfocus="checkCapsWarning(event)" onblur="removeCapsWarning()" required/>
 										{% IFNOT user_agent_ie %}
 										<div class="showPassBlock"><a href="#" rel="Скрыть пароль" class="showPass">Показать пароль</a></div>
 										{% ENDIF %}
@@ -207,7 +207,7 @@
 								</div>
 								<div class="client__buttons addto__buttons">
 									<button type="submit" name="send" class="button" title="Войти">Войти</button>
-									<a href="{USER_REGISTER_URL}" class="button button4">Зарегистрироваться</a>
+									<a href="{USER_REGISTER_URL}" class="button">Зарегистрироваться</a>
 								</div>
 							</form>
 							{% ENDIF %}
@@ -267,7 +267,7 @@
 							<div class="addto__nav-item catalog" data-open="catalog"><span>Каталог товаров</span></div>
 							<div class="addto__nav-item menu" data-open="menu"><span>Меню сайта</span></div>
 						</div>
-						<div id="addtoCatalog" class="addto__catalog" data-open="catalog">
+						<div id="addtoCatalog" class="addto__catalog" data-content="catalog">
 							<div class="catalog__items">
 								{% FOR catalog_full %}
 								{% IF catalog_full.FIRST %}{% IFNOT catalog_full.LEVEL = 0 %}<div data-level="{catalog_full.LEVEL}" class="sub">{% ENDIF %}{% ENDIF %}
@@ -280,7 +280,7 @@
 								{% IF catalog_full.LAST %}{%FOR out%}</div> {%IFNOT catalog_full.out.LAST%}</div>{%ENDIF%}{%ENDFOR%}{% ENDIF %}
 							{% ENDFOR %}
 						</div>
-						<div id="addtoMenu" class="addto__menu" data-open="menu">
+						<div id="addtoMenu" class="addto__menu" data-content="menu">
 							<ul class="mainnav__list">
 								{% FOR menu %}
 									{% FOR header %}
@@ -327,7 +327,7 @@
 						<div class="inner">
 							<div class="result__category"></div>
 							<div class="result__goods"></div>
-							<div class="result__showAll button button4">все результаты</div>
+							<div class="result__showAll button">все результаты</div>
 						</div>
 					</div>
 				</div>
@@ -1429,7 +1429,7 @@
 				<div class="block__left sidebar {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods || MOD_LNAME = callback || MOD_LNAME = news || MOD_LNAME = feedback || MOD_LNAME = page %}hide{% ENDIF %}">
 					<!-- Если в тарифном плане подключен модуль фильтров по товарам -->
 					{% IF SHOW_GOODS_FILTERS %}
-					<div class="sidebar__block filters {% FOR filter_attr_list %}{% FOR values %}{% IF filter_attr_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %} {% FOR filter_prop_list %}{% FOR values %}{% IF filter_prop_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %}" id="filters" data-content="filters">
+					<div id="filters" data-content="filters" class="sidebar__block filters {% FOR filter_attr_list %}{% FOR values %}{% IF filter_attr_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %} {% FOR filter_prop_list %}{% FOR values %}{% IF filter_prop_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %}">
 						<div class="sidebar__title">
 							<span>Фильтры</span>
 						</div>
@@ -1454,7 +1454,7 @@
 											</div>
 											<div id="goods-filter-price-slider"></div>
 											<div class="goodsFilterPriceSubmit">
-												<button class="button button5" type="submit" title="Показать"><span>Применить</span></button>
+												<button class="button" type="submit" title="Показать"><span>Применить</span></button>
 												<a href="{PAGE_CANONICAL}" class="clear" title="Очистить фильры"><span>Очистить</span></a>
 											</div>
 										</div>
@@ -1961,6 +1961,7 @@
 		goodspage();
 		goodsModification();
 		newModification();
+		gsapAnimGoods();
 	});
 	{% ENDIF %}
 	// Скрипты для страницы "Сравнение"
@@ -1979,7 +1980,8 @@
 	{% IF MOD_LNAME = catalog || MOD_LNAME = discount || MOD_LNAME = search %}
 	$(document).ready(function () {
 		priceFilter();
-		catalogpage();
+		catalog();
+		gsapAnimCatalog();
 	});
 	{% ENDIF %}
 	// Запуск основных скриптов для "главной" страницы
@@ -1991,6 +1993,7 @@
 		pdtCatalog();
 		pdtBrands();
 		counterDate();
+		gsapAnimIndex();
 	});
 	{% ENDIF %}
 	// Модальное окно уведомления при отправке сообщения
