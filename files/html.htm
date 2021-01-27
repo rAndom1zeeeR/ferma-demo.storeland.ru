@@ -70,7 +70,7 @@
 				<div class="contacts">
 					{% IF SETTINGS_STORE_PHONE_NUMBER1 %}
 					<a class="contacts__block phone" href="tel:{SETTINGS_STORE_PHONE_COUNTRY_CODE1}({SETTINGS_STORE_PHONE_CITY_CODE1}){SETTINGS_STORE_PHONE_NUMBER1}" class="contacts__phone phone" title="{SETTINGS_STORE_PHONE_COUNTRY_CODE1}({SETTINGS_STORE_PHONE_CITY_CODE1}){SETTINGS_STORE_PHONE_NUMBER1}">
-						<div class="contacts__icon"><i class="icon-phone"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i></div>
+						<div class="contacts__icon"><i class="icon-phone"></i></div>
 						<div class="contacts__content">
 							<span class="font">{SETTINGS_STORE_PHONE_COUNTRY_CODE1}({SETTINGS_STORE_PHONE_CITY_CODE1}){SETTINGS_STORE_PHONE_NUMBER1}</span>
 							<div data-fancybox="" data-src="#fancybox__callback" class="fancybox__link"><span>Заказать звонок</span></div>
@@ -315,7 +315,7 @@
 				<!-- Поиск -->
 				<div class="search" itemscope itemtype="https://schema.org/WebSite">
 					<link itemprop="url" href="{INDEX_PAGE_URL}"/>
-					<form class="search__form bordered" action="{QUICK_SEARCH_URL}" method="get" title="Поиск по магазину" itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
+					<form class="search__form" action="{QUICK_SEARCH_URL}" method="get" title="Поиск по магазину" itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
 						<meta itemprop="target" content="{SEARCH_URL}?q={{EMPTY}q}" />
 						<input type="hidden" name="goods_search_field_id" value="0" />
 						<input type="text" name="q" value="{FORM_SEARCH_Q}" class="search__input" placeholder="Искать" autocomplete="off" itemprop="query-input" />
@@ -589,15 +589,17 @@
 	<!-- Промо -->
 	<section id="promo">
 		<div class="container">
-			<div class="promo__inner">
-				<div class="promo__border">
-					<div class="promo__text">
-						<div class="promo__title">Козье молоко</div>
-						<div class="promo__subtitle">по лучшим ценам*</div>
+			<div class="promo__content">
+				<div class="promo__inner">
+					<div class="promo__border">
+						<div class="promo__text">
+							<div class="promo__title">Козье молоко</div>
+							<div class="promo__subtitle">по лучшим ценам*</div>
+						</div>
 					</div>
-				</div>
-				<div class="promo__image">
-					<img src="{ASSETS_IMAGES_PATH}promo1.png?design=THEMENAME" />
+					<div class="promo__image">
+						<img src="{ASSETS_IMAGES_PATH}promo1.png?design=THEMENAME" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1425,7 +1427,7 @@
 			</div>
 			
 			<div class="inner">
-				{% IFNOT IS_FULL_CATALOG %}
+				{% IFNOT IS_FULL_CATALOG && recently_viewed_goods_empty=0 || SHOW_GOODS_FILTERS %}
 				<div class="block__left sidebar {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods || MOD_LNAME = callback || MOD_LNAME = news || MOD_LNAME = feedback || MOD_LNAME = page %}hide{% ENDIF %}">
 					<!-- Если в тарифном плане подключен модуль фильтров по товарам -->
 					{% IF SHOW_GOODS_FILTERS %}
@@ -1454,7 +1456,7 @@
 											</div>
 											<div id="goods-filter-price-slider"></div>
 											<div class="goodsFilterPriceSubmit">
-												<button class="button" type="submit" title="Показать"><span>Применить</span></button>
+												<button class="button button5" type="submit" title="Показать"><span>Применить</span></button>
 												<a href="{PAGE_CANONICAL}" class="clear" title="Очистить фильры"><span>Очистить</span></a>
 											</div>
 										</div>
@@ -1490,9 +1492,9 @@
 								</div>
 								{% ENDFOR %}
 							</form>
-							<div class="sidebar__buttons filter__buttons">
-								<a href="{PAGE_CANONICAL}" class="goodsFilterClear button button2" title="Очистить фильры"><span>Сбросить фильтры</span></a>
-							</div>
+						</div>
+						<div class="sidebar__buttons filter__buttons">
+							<a href="{PAGE_CANONICAL}" class="goodsFilterClear button button2" title="Очистить фильры"><span>Сбросить фильтры</span></a>
 						</div>
 					</div>
 					{% ENDIF %}
@@ -1689,8 +1691,8 @@
 			<div class="container">
 				<div class="inner">
 					<!-- Подвал.Каталог TODO сделать иконку-->
-					<div class="catalog dropdown">
-						<a href="{CATALOG_URL}" class="addto__label dropdown__open catalog__icon" title="Каталог" data-open="catalog">
+					<div class="catalog">
+						<a href="{CATALOG_URL}" class="catalog__icon" title="Каталог">
 							<i class="icon-grid"></i>
 							<span>Весь каталог</span>
 						</a>

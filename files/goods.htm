@@ -354,13 +354,12 @@
     {% IFNOT SETTINGS_OPINION_DISABLE %}
     <div class="productView__opinion" data-tab="4">
       <div class="opinion__round">
-        <div class="rating__label">Рейтинг товара</div>
+        <div class="rating__label {% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}bad{% ENDIF %}">{% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}Не самый качественный товар.{% ELSE %}Это хороший товар! Его рейтинг{% ENDIF %}</div>
         <div class="ratings">
           <div class="rating" style="width:{GOODS_OPINION_RATING_VALUE_ROUND}0%"></div>
         </div>
         <div class="rating__value">{GOODS_OPINION_RATING_VALUE_ROUND | divide("2")}</div>
         <div class="rating__cnt">На основе {GOODS_OPINION_RATING_CNT_ALL} отзыв{GOODS_OPINION_RATING_CNT_ALL | gen_word_end("а","ов","ов")}</div>
-      
         <div class="rating__buttons">
           <div class="button button2 opinion__add"><span>Оставить отзыв</span></div>
         </div>
@@ -372,7 +371,7 @@
           <div class="opinion__item {% IF opinion_list.GENERALLY_IS_GOOD %}good{% ELSE %}bad{% ENDIF %}" data-rating='{opinion_list.RATING | divide("2")}'>
             {% IF opinion_list.NAME %}<div class="opinion__name" itemprop="author">{opinion_list.NAME}</div>{% ENDIF %}
             {% IF opinion_list.RATING %}
-            <div class="opinion__ratings ratings" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+            <div class="opinion__ratings ratings small" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
               <meta itemprop="worstRating" content="1">
               <meta itemprop="bestRating" content="10">
               <meta itemprop="ratingValue" content="{opinion_list.RATING}">
@@ -410,20 +409,22 @@
 	          <!-- Набор полей которые не видит пользователь, но видят боты. Когда они их заполняют мы точно знаем, что их прислал нам бот и мы не сохраняем подобный отзыв о товаре, а боту отправившему отзыв сообщаем, что отзыв добавлен успешно, но будет отображён здесь после прохождения модерации -->
 	          {ANTISPAM_CODE}
 	          <!-- Форма добавления отзыва о товаре -->
-	          <div class="opinion__block">
-	            <label for="goods_opinion_name">Представьтесь, пожалуйста:</label>
-	            <input id="goods_opinion_name" type="text" name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_NAME}]" value="{% IF CLIENT_IS_LOGIN %}{CLIENT_NAME}{% ELSE %}{FORM_GOODS_OPINION_NAME}{% ENDIF %}" maxlength="50"  class="form__input" placeholder="Ваше имя:" required />
-	          </div>
-	          <div class="opinion__block rating">
-	            <span>Ваша оценка:</span>
-	            <div class="goodsOpinionRating">
-	              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="2" {% IF FORM_GOODS_OPINION_RATING=2 %}checked="checked"{% ENDIF %} title="Ужасно" />
-	              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="4" {% IF FORM_GOODS_OPINION_RATING=4 %}checked="checked"{% ENDIF %} title="Плохо" />
-	              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="6" {% IF FORM_GOODS_OPINION_RATING=6 %}checked="checked"{% ENDIF %} title="Средне" />
-	              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="8" {% IF FORM_GOODS_OPINION_RATING=8 %}checked="checked"{% ENDIF %} title="Хорошо" />
-	              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="10" {% IF FORM_GOODS_OPINION_RATING=10 %}checked="checked"{% ENDIF %} title="Превосходно" />
-	            </div>
-	          </div>
+		        <div class="opinion__blocks duo">
+		          <div class="opinion__block">
+		            <label for="goods_opinion_name">Представьтесь, пожалуйста:</label>
+		            <input id="goods_opinion_name" type="text" name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_NAME}]" value="{% IF CLIENT_IS_LOGIN %}{CLIENT_NAME}{% ELSE %}{FORM_GOODS_OPINION_NAME}{% ENDIF %}" maxlength="50"  class="form__input" placeholder="Ваше имя:" required />
+		          </div>
+		          <div class="opinion__block rating">
+		            <span>Ваша оценка:</span>
+		            <div class="goodsOpinionRating">
+		              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="2" {% IF FORM_GOODS_OPINION_RATING=2 %}checked="checked"{% ENDIF %} title="Ужасно" />
+		              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="4" {% IF FORM_GOODS_OPINION_RATING=4 %}checked="checked"{% ENDIF %} title="Плохо" />
+		              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="6" {% IF FORM_GOODS_OPINION_RATING=6 %}checked="checked"{% ENDIF %} title="Средне" />
+		              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="8" {% IF FORM_GOODS_OPINION_RATING=8 %}checked="checked"{% ENDIF %} title="Хорошо" />
+		              <input name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_RATING}]" type="radio" value="10" {% IF FORM_GOODS_OPINION_RATING=10 %}checked="checked"{% ENDIF %} title="Превосходно" />
+		            </div>
+		          </div>
+		        </div>
 	          <div class="opinion__block" style="display: none;">
 	            <label for="goods_opinion_title">Заголовок:</label>
 	            <input type="text" id="goods_opinion_title" name="form[{ANTISPAM_FORM_FIELD_NAME_GOODS_OPINION_TITLE}]" value="{FORM_GOODS_OPINION_TITLE}" maxlength="255" class="form__input" />

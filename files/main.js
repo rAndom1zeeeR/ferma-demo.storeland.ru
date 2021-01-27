@@ -3001,12 +3001,12 @@ function newsCarousel() {
 
 // Вы смотрели
 function recViewed() {
-  let viewedContent = $('.viewed__items');
+  let viewedContent = $('.viewed');
   let viewedCount = viewedContent.find('.viewed__item').length;
-  if(viewedCount<=3){ viewedContent.find('.viewed__buttons').hide(); }
+  if(viewedCount>3){ viewedContent.find('.viewed__buttons').show(); }
   $('.viewed__buttons .showAll').on('click',function(){
     if($(this).hasClass('active')){
-      $(this).removeClass('active').find('span').text("Все отзывы");
+      $(this).removeClass('active').find('span').text("Показать все");
       viewedContent.find('.viewed__item').removeClass('show');
     }else{
       $(this).addClass('active').find('span').text("Скрыть все");

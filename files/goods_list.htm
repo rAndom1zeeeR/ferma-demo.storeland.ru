@@ -74,6 +74,7 @@
         <span>Фильтр</span>
       </div>
       {% ENDIF %}-->
+	    <div class="goodsResults">Всего {GOODS_PAGES_RESULTS} товар{GOODS_PAGES_RESULTS | gen_word_end("","а","ов")}</div>
       <!-- Сортировать по: (Поле сортировки товаров по умолчанию) -->
       <div class="sort-by">
         <!-- Сортировка выпадающим списком	-->
@@ -342,7 +343,7 @@
 				    <!-- Рейтинг -->
 				    {% IFNOT SETTINGS_OPINION_DISABLE %}
 				    <div class="product__ratings">
-					    <div class="ratings">
+					    <div class="ratings small">
 						    {% IF goods.OPINION_RATING_VALUE %}
 						    <span itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
 	                <meta itemprop="worstRating" content = "1">
