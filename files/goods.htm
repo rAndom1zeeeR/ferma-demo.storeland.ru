@@ -205,7 +205,7 @@
               {% IF goods_modifications_properties.values.first %}
                 <label>{goods_modifications_properties.NAME}:</label>
                 <div class="selectBox" style="display: none">
-                  <select name="form[properties][]" class="select">
+                  <select name="form[properties][]" class="">
                 {% ENDIF %}
                   <option value="{goods_modifications_properties.values.ID}" {% IF goods_modifications_properties.values.SELECTED %}selected="selected"{% ENDIF %}>{goods_modifications_properties.values.NAME}</option>
                   <!-- Если это последний элемент в списке -->
@@ -353,6 +353,7 @@
     <!-- Отзывы -->
     {% IFNOT SETTINGS_OPINION_DISABLE %}
     <div class="productView__opinion" data-tab="4">
+	    {% IFNOT opinion_list_empty %}
       <div class="opinion__round">
         <div class="rating__label {% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}bad{% ENDIF %}">{% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}Не самый качественный товар.{% ELSE %}Это хороший товар! Его рейтинг{% ENDIF %}</div>
         <div class="ratings">
@@ -364,6 +365,7 @@
           <div class="button button2 opinion__add"><span>Оставить отзыв</span></div>
         </div>
       </div>
+	    {% ENDIF %}
       <!-- Список отзывов о товарах -->
       {% IFNOT opinion_list_empty %}
       <div class="opinion__items" itemprop="review" itemscope itemtype="https://schema.org/Review">

@@ -69,11 +69,6 @@
       {% FOR goods_filters %}
         <input type="hidden" name="{goods_filters.NAME}" value="{goods_filters.VALUE}" />
       {% ENDFOR %}
-      <!--{% IF SHOW_GOODS_PRICE_FILTERS || goods_filters_empty=1 %}
-      <div class="filters__icon selectBox">
-        <span>Фильтр</span>
-      </div>
-      {% ENDIF %}-->
 	    <div class="goodsResults">Всего {GOODS_PAGES_RESULTS} товар{GOODS_PAGES_RESULTS | gen_word_end("","а","ов")}</div>
       <!-- Сортировать по: (Поле сортировки товаров по умолчанию) -->
       <div class="sort-by">

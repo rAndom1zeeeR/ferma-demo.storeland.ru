@@ -1430,7 +1430,7 @@
 				{% IFNOT IS_FULL_CATALOG && recently_viewed_goods_empty=0 || SHOW_GOODS_FILTERS %}
 				<div class="block__left sidebar {% IF MOD_LNAME = cart || MOD_LNAME = user || MOD_LNAME = order || MOD_LNAME = compare || MOD_LNAME = goods || MOD_LNAME = callback || MOD_LNAME = news || MOD_LNAME = feedback || MOD_LNAME = page %}hide{% ENDIF %}">
 					<!-- Если в тарифном плане подключен модуль фильтров по товарам -->
-					{% IF SHOW_GOODS_FILTERS %}
+					{% IF SHOW_GOODS_PRICE_FILTERS || SHOW_GOODS_FILTERS %}
 					<div id="filters" data-content="filters" class="sidebar__block filters {% FOR filter_attr_list %}{% FOR values %}{% IF filter_attr_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %} {% FOR filter_prop_list %}{% FOR values %}{% IF filter_prop_list.values.CHECKED %}hasFilters {% ENDIF %}{% ENDFOR %}{% ENDFOR %}">
 						<div class="sidebar__title">
 							<span>Фильтры</span>

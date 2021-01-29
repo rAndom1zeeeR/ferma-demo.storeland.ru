@@ -865,20 +865,21 @@ function quantity() {
 // Радио кнопки для модификаций
 function newModification() {
   $('.goodsModificationsProperty').each(function(){
-    a = $(this).find('select option:selected').attr('value');
+    let a = $(this).find('select option:selected').attr('value');
     $(this).find('.goodsModificationsValue[data-value="'+ a +'"]').addClass('active');
-    dis = $(this).find('select option:disabled').attr('value');
+    let dis = $(this).find('select option:disabled').attr('value');
     $(this).find('.goodsModificationsValue[data-value="'+ dis +'"]').removeClass('active');
     $(this).find('.goodsModificationsValue[data-value="'+ dis +'"]').addClass('disabled');
   });
-  $('.goodsModificationsValue').click(function(){
+  $('.goodsModificationsValue').on('click', function(){
     $(this).parent().find('.goodsModificationsValue').removeClass('active');
     $(this).addClass('active');
-    a = $(this).data('value');
+    let a = $(this).data('value');
     $(this).parent().parent().find('select option[value="' + a + '"]').prop('selected',true);
     $(this).parent().parent().find('select').trigger('change');
   });
   $('.goodsModificationsValue.disabled').off('click');
+  console.log('start')
 }
 
 // Модификации
