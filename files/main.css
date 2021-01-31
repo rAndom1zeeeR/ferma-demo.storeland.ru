@@ -617,6 +617,7 @@ footer .dropdown__content.opened {top: auto;bottom: 100%;margin-bottom: 1rem;}
 .noty_type__success a, .noty_type__success a:visited, .noty_type__success a:focus, .noty_type__success a:hover {color: inherit;}
 
 /*** Страница: Быстрый заказ ***/
+#globalOrder {position: relative;}
 #OrderAjaxBlock {margin-top: 3rem;background: #f4f3f5;padding: 2rem;border-radius: 20px;}
 .fastOrder #closeOrder {display: none;}
 .fastOrder__form {display: flex;flex-wrap: wrap;justify-content: space-between;}
