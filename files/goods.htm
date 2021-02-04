@@ -355,7 +355,7 @@
     <div class="productView__opinion" data-tab="4">
 	    {% IFNOT opinion_list_empty %}
       <div class="opinion__round">
-        <div class="rating__label {% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}bad{% ENDIF %}">{% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}Не самый качественный товар.{% ELSE %}Это хороший товар! Его рейтинг{% ENDIF %}</div>
+        <div class="rating__label {% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}bad{% ENDIF %}">{% IF GOODS_OPINION_RATING_VALUE_ROUND < 6 %}Рейтинг товара{% ELSE %}Это хороший товар! Его рейтинг{% ENDIF %}</div>
         <div class="ratings">
           <div class="rating" style="width:{GOODS_OPINION_RATING_VALUE_ROUND}0%"></div>
         </div>
