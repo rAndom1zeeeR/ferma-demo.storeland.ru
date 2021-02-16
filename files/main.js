@@ -2946,7 +2946,7 @@ function slideShow() {
     nav: true,
     navText: [ , ],
     navContainer: '#slideshow .owl-nav',
-    dots: false,
+    dots: true,
     dotsContainer: '',
     URLhashListener: true,
     autoplay: false,
