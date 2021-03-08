@@ -1327,7 +1327,7 @@ footer .contacts__block.email {margin-top: 2rem;}
 }
 
 /*** Новый селект бокс ***/
-.jq-selectbox.select {z-index: 2;}
+.jq-selectbox.select {z-index: 3;}
 .jq-selectbox__select {height: 64px;line-height: 64px;padding: 0 3rem 0 2rem;border-radius: 32px;background-color: #FFFFFF;box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.09);cursor: pointer;transition: all 0.3s ease;}
 .jq-selectbox__select:hover, .jq-selectbox.opened .jq-selectbox__select {background: #f4f3f5;}
 .jq-selectbox__select-text {min-width: 20px;}
