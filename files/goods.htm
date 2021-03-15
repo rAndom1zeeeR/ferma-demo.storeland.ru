@@ -17,9 +17,11 @@
 	    <div class="product__ico">
 		    {% IF GOODS_IS_NEW %}
 		    <span class="ico__new"></span>
-		    {% ELSEIF GOODS_IS_TOP %}
+		    {% ENDIF %}
+		    {% IF GOODS_IS_TOP %}
 		    <span class="ico__best"></span>
-		    {% ELSEIF GOODS_IS_PLACE_ON_INDEX_PAGE %}
+		    {% ENDIF %}
+		    {% IF GOODS_IS_PLACE_ON_INDEX_PAGE %}
 		    <span class="ico__sale"></span>
 		    {% ENDIF %}
 	    </div>
