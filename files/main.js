@@ -2677,13 +2677,7 @@ function coupons() {
         let deliveryPrice = parseInt($('.cartSumDelivery .num').text());
         let newTotalSum = totalSum + deliveryPrice;
         let cartSum = $('.cartSumTotal').data('value');
-        if (totalSum > cartSum) {
-          couponInput.parent().addClass('error');
-          couponInput.parent().removeClass('active');
-          couponInput.val("").attr("placeholder", "Купон неверен");
-          $('.total__coupons').hide();
-          $('.total__discount').show();
-        } else {
+        if (discountBlock.length) {
           couponInput.parent().removeClass('error');
           couponInput.parent().addClass('active');
           $('.total__coupons').show();
@@ -2694,6 +2688,12 @@ function coupons() {
           $('.cartSumTotalHide').attr('data-value', newTotalSum);
           $('.cartSumTotalHide .num').text(newTotalSum);
           $('.cartSumDiscount .num').text(totalSum);
+        } else {
+          couponInput.parent().addClass('error');
+          couponInput.parent().removeClass('active');
+          couponInput.val("").attr("placeholder", "Купон неверен");
+          $('.total__coupons').hide();
+          $('.total__discount').show();
         }
       },
       error: function(data){
