@@ -781,6 +781,7 @@ header .fancybox__link {max-width: 200px;}
 /** Каталог **/
 .catalog__icon {font-size: 22px;font-weight: bold;display: flex;align-items: center;justify-content: flex-start;font-family: 'Source Serif Pro', sans-serif;}
 .catalog__icon i + span {margin-left: 1rem;}
+.catalog__icon:after {content: '';display: block;width: 200px;height: 60px;position: absolute;bottom: -40px;}
 header .catalog {order: 4;margin-top: 1rem;width: 200px;}
 header #addtoCatalog.dropdown__content {width: 100%;max-width: 100%;margin-top: 1rem;transition: 0s;box-shadow: none;border: 1px solid #fda800;left: 0;}
 header .catalog .dropdown__open:before {width: auto;height: auto;right: auto;left: auto;bottom: auto;position: relative;}
@@ -801,6 +802,7 @@ header .catalog__item .sub {padding-left: 1rem;display: none;}
 .addto__nav .addto__nav-item.menu span {background-image: url("{ASSETS_IMAGES_PATH}menu.png?design=fresh");}
 @media all and (max-width: 1199px) {
 .addto__nav {display: flex;align-items: center;flex-wrap: wrap;}
+.catalog__icon:after {content: '';display: block;width: 80px;height: 60px;position: absolute;bottom: -40px;}
 }
 @media all and (max-width: 640px) {
 .addto__nav .addto__nav-item {width: 100%;max-width: 260px;margin-bottom: 1rem;}
