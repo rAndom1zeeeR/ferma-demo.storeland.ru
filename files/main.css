@@ -1672,7 +1672,7 @@ footer .contacts__block.email {margin-top: 2rem;}
 .productViewMod .productView__available {display: none;}
 .productViewMod .productView__imageBox {display: none;}
 .productViewMod .productView__campaign {display: none;}
-.productViewMod .productView__shop {width: 100%;padding: 0;}
+.productViewMod .productView__shop {width: 100%;padding: 0;margin: 0;}
 .productViewMod .productView__addto .add-cart {width: 100%;margin: 1rem 0 0 0;padding: 0 2rem;}
 .productViewMod .productView__ratings {display: none;margin: 0;width: 100%;}
 .productViewMod .ratings__total {display: none;}

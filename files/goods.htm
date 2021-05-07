@@ -218,11 +218,11 @@
             {% ENDFOR %}
             {% FOR values %}
               {% IF goods_modifications_properties.values.first %}
-                <div class="goodsModificationsValues">
+              <div class="goodsModificationsValues">
               {% ENDIF %}
-                <div class="goodsModificationsValue" data-value="{goods_modifications_properties.values.ID}"><span>{goods_modifications_properties.values.NAME}</span></div>
+                <a href="javascript:;" class="goodsModificationsValue" data-value="{goods_modifications_properties.values.ID}"><span>{goods_modifications_properties.values.NAME}</span></a>
               {% IF goods_modifications_properties.values.last %}
-                </div>
+              </div>
               {% ENDIF %}
             {% ENDFOR %}
           </div>                  
